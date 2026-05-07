@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #346859;
+    --primary-container: #b4ebd8;
+    --on-primary: #ffffff;
+    --on-primary-container: #386c5d;
+    
+    --secondary: #765b06;
+    --secondary-container: #ffd97d;
+    --on-secondary: #ffffff;
+    --on-secondary-container: #785d09;
+    
+    --tertiary: #874f4c;
+    --tertiary-container: #ffd6d3;
+    --on-tertiary: #ffffff;
+    --on-tertiary-container: #8b5350;
+    
+    --background: #faf9f6;
+    --on-background: #1a1c1a;
+    
+    --surface: #faf9f6;
+    --on-surface: #1a1c1a;
+    --surface-variant: #e3e2e0;
+    --on-surface-variant: #404945;
+    
+    --outline: #707975;
+    --outline-variant: #c0c9c4;
+    
+    --error: #ba1a1a;
+    --error-container: #ffdad6;
+  }
+
+  body {
+    @apply bg-background text-on-background font-sans;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+@layer components {
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .filled-icon {
+    font-variation-settings: 'FILL' 1;
+  }
+
+  .press-effect {
+    @apply transition-all active:translate-y-[2px];
+  }
+
+  .cottage-card {
+    @apply bg-white rounded-[32px] border-b-4 border-surface-variant shadow-sm transition-all hover:scale-[1.01];
+  }
+
+  .bento-card {
+    @apply transition-all duration-300 hover:scale-[1.02];
+  }
+
+  .inner-glow-top {
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  }
+
+  .ticker-scroll {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: scroll-left 25s linear infinite;
+  }
+
+  @keyframes scroll-left {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

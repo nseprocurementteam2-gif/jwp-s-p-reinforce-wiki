@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-tint": "#565e74",
+                    "inverse-primary": "#bec6e0",
+                    "on-surface": "#191c1e",
+                    "primary-container": "#131b2e",
+                    "tertiary": "#000000",
+                    "surface-container-low": "#f2f4f6",
+                    "surface": "#f7f9fb",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#002113",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "primary": "#000000",
+                    "primary-fixed": "#dae2fd",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#002113",
+                    "on-secondary-container": "#57657a",
+                    "secondary-container": "#d5e3fc",
+                    "background": "#f7f9fb",
+                    "on-secondary-fixed-variant": "#3a485b",
+                    "on-secondary-fixed": "#0d1c2e",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-dim": "#d8dadc",
+                    "outline-variant": "#c6c6cd",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#d5e3fc",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#b9c7df",
+                    "on-tertiary-container": "#009668",
+                    "on-surface-variant": "#45464d",
+                    "surface-variant": "#e0e3e5",
+                    "surface-bright": "#f7f9fb",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "on-background": "#191c1e",
+                    "on-primary-fixed": "#131b2e",
+                    "on-error": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "outline": "#76777d",
+                    "surface-container-high": "#e6e8ea",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-primary-container": "#7c839b",
+                    "primary-fixed-dim": "#bec6e0",
+                    "surface-container": "#eceef0",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "secondary": "#515f74"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "gutter": "20px",
+                    "base": "4px",
+                    "sm": "12px",
+                    "margin-mobile": "16px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "margin-desktop": "32px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Inter"],
+                    "data-tabular": ["Inter"],
+                    "display-kpi": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "data-tabular": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                    "display-kpi": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["18px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body { font-family: 'Inter', sans-serif; }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface shadow-sm docked full-width top-0 z-50 sticky">
+<div class="flex justify-between items-center px-gutter py-xs w-full">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-secondary-container flex items-center justify-center">
+<img alt="Marcus V." class="w-full h-full object-cover" data-alt="A professional high-contrast portrait of a corporate executive in a minimalist architectural setting. The lighting is soft and high-key, emphasizing a light-mode aesthetic with clean white surfaces and subtle gray shadows. The overall mood is authoritative and dependable, consistent with a premium procurement platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnGBXn5CY3P2XtxQoX5BZ9m-HPqDWfMM0fOhE6x0y3IpESBxU5CnhgGHmAytoFkftLtlu9cHYn11oYP_MgevALTQGSoX9pnorCAswtLqaOKDa0DjxUnzAm2pfngbXewpwLc6zye4ImhnTYtKzrNRRcd2XnFYYch73lSMxhL4LwlZtVP40tOKuQ7yByWQYOBOii-o-un6WT9GRi2o2lLcoXdD6FcyoxFlezfO_3_5-EirhU7ByRO6kgTHaFG3rEVVcRWk5X_G5VuQ"/>
+</div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary">ProcureIntel</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-surface-variant p-2 rounded-full active:scale-95 transition-transform duration-150">notifications</button>
+</div>
+</div>
+</header>
+<main class="flex-grow px-margin-mobile py-lg pb-xl max-w-md mx-auto w-full">
+<div class="mb-lg">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-xs">보안 지침</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">안전하고 규정에 맞는 구매 환경을 유지하기 위한 가이드입니다.</p>
+</div>
+<!-- Infographic Layout: Data Privacy -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm mb-lg overflow-hidden border border-outline-variant/30">
+<div class="p-lg bg-secondary-container/20 flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">privacy_tip</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-secondary-fixed">데이터 프라이버시</h3>
+</div>
+<div class="p-lg space-y-md">
+<div class="flex items-start gap-md">
+<div class="mt-1 w-6 h-6 rounded-full border-2 border-on-tertiary-container flex items-center justify-center flex-shrink-0">
+<span class="text-[10px] font-bold text-on-tertiary-container">01</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-tertiary-container mb-1">암호화</p>
+<p class="font-body-md text-body-md text-on-surface-variant">모든 재무 문서는 반드시 암호화된 포털을 통해서만 업로드해야 합니다.</p>
+</div>
+</div>
+<div class="flex items-start gap-md">
+<div class="mt-1 w-6 h-6 rounded-full border-2 border-on-tertiary-container flex items-center justify-center flex-shrink-0">
+<span class="text-[10px] font-bold text-on-tertiary-container">02</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-tertiary-container mb-1">데이터 민감도</p>
+<p class="font-body-md text-body-md text-on-surface-variant">모든 협력사 데이터는 개인정보 포함 여부에 따라 '기밀' 또는 '제한'으로 분류하십시오.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Infographic Layout: Access Control -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm mb-lg overflow-hidden border border-outline-variant/30">
+<div class="p-lg bg-tertiary-fixed/10 flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shield_person</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-tertiary-fixed">접근 제어</h3>
+</div>
+<div class="p-lg">
+<div class="relative flex flex-col items-center">
+<!-- Circular Diagram Representation -->
+<div class="relative w-40 h-40 mb-md">
+<svg class="w-full h-full transform -rotate-90">
+<circle cx="80" cy="80" fill="transparent" r="70" stroke="#e0e3e5" stroke-width="8"></circle>
+<circle cx="80" cy="80" fill="transparent" r="70" stroke="#009668" stroke-dasharray="440" stroke-dashoffset="110" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4"><span class="font-display-kpi text-display-kpi text-[24px]">MFA</span><span class="font-label-caps text-[10px] text-outline">활성화됨</span></div>
+</div>
+<ul class="w-full space-y-sm">
+<li class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-on-tertiary-container text-sm">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">강력한 비밀번호 사용 (12자 이상)</span>
+</li>
+<li class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-on-tertiary-container text-sm">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant">계정 공유 금지</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Infographic Layout: Incident Reporting -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm mb-lg overflow-hidden border border-outline-variant/30">
+<div class="p-lg bg-error-container/20 flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">report</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-error-container">침해 사고 보고</h3>
+</div>
+<div class="p-lg flex gap-lg">
+<div class="flex-1 text-center">
+<div class="mb-xs font-label-caps text-label-caps text-outline">1단계</div>
+<div class="h-1 bg-error-container mb-sm rounded-full overflow-hidden">
+<div class="w-full h-full bg-error"></div>
+</div>
+<p class="font-body-md text-[12px] leading-tight text-on-surface-variant">이상 징후 또는 침해 확인</p>
+</div>
+<div class="flex-1 text-center">
+<div class="mb-xs font-label-caps text-label-caps text-outline">2단계</div>
+<div class="h-1 bg-error-container mb-sm rounded-full overflow-hidden">
+<div class="w-1/2 h-full bg-error"></div>
+</div>
+<p class="font-body-md text-[12px] leading-tight text-on-surface-variant">SOS 버튼을 통해 보고</p>
+</div>
+<div class="flex-1 text-center">
+<div class="mb-xs font-label-caps text-label-caps text-outline">3단계</div>
+<div class="h-1 bg-error-container mb-sm rounded-full"></div>
+<p class="font-body-md text-[12px] leading-tight text-on-surface-variant">CISO 지침 준수</p>
+</div>
+</div>
+</div>
+<!-- Call to Action -->
+<button class="w-full bg-primary text-on-primary py-md rounded-lg font-label-caps text-label-caps active:scale-95 transition-transform duration-150 shadow-md">전체 정책 읽기</button>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-inverse-surface shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors rounded-full active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-label-caps mt-1">지표</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors rounded-full active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="font-label-caps text-label-caps mt-1">분석</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors rounded-full active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">inventory</span>
+<span class="font-label-caps text-label-caps mt-1">협력사</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full px-4 py-1 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">gavel</span>
+<span class="font-label-caps text-label-caps mt-1">보안</span>
+</a>
+</nav>
+<!-- Visual background decoration (Subtle Grid) -->
+<div class="fixed inset-0 pointer-events-none -z-10 opacity-10">
+<div class="absolute inset-0 bg-[radial-gradient(#76777d_1px,transparent_1px)] [background-size:24px_24px]"></div>
+</div>
+</body></html>
