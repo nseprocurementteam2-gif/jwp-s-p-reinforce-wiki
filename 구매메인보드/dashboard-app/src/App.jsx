@@ -101,6 +101,10 @@ const EmergencyGuideModal = ({ isOpen, onClose }) => (
 // --- View 1: 시장 지표 대시보드 ---
 const DashboardView = ({ currency, setCurrency, updateTime }) => {
   const [isGuideOpen, setIsGuideOpen] = useState(false);
+  const [realtimeIntel, setRealtimeIntel] = useState([]);
+  const [realtimeAlerts, setRealtimeAlerts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
   const currencyData = {
     USD: { 
       label: 'USD / KRW (원/달러)', 
@@ -127,6 +131,182 @@ const DashboardView = ({ currency, setCurrency, updateTime }) => {
   };
 
   const selectedData = currencyData[currency];
+
+  const day = new Date().getDate(); // 날짜별로 다른 데이터를 보여주기 위해 사용
+  
+  // ACTIVE ALERTS 데이터 배열
+  const alertsData = [
+    {
+      colorClass: 'bg-error-container/10 border-l-4 border-error',
+      icon: <TrendingUp className="text-error w-5 h-5" />,
+      title: `${currency} 환율 변동성 임계치 도달`,
+      desc: '수입 결제 시점 조정 권고'
+    },
+    {
+      colorClass: 'bg-secondary-container/10 border-l-4 border-secondary',
+      icon: <AlertTriangle className="text-secondary w-5 h-5" />,
+      title: '중동 지정학적 리스크 심화',
+      desc: '해상 물류비(SCFI) 급등 우려'
+    },
+    {
+      colorClass: 'bg-primary-container/10 border-l-4 border-primary',
+      icon: <Activity className="text-primary w-5 h-5" />,
+      title: '국내 산업용 전기요금 추가 인상 가능성',
+      desc: '에너지 다소비 자재(시멘트 등) 단가 영향'
+    },
+    {
+      colorClass: 'bg-tertiary-container/10 border-l-4 border-tertiary',
+      icon: <ArrowUpRight className="text-tertiary w-5 h-5" />,
+      title: '중국 철강 생산 감축 본격화',
+      desc: '국내 열연/철근 유통가 반등 전조'
+    },
+    {
+      colorClass: 'bg-error-container/10 border-l-4 border-error',
+      icon: <TrendingUp className="text-error w-5 h-5" />,
+      title: 'LME 비철금속 재고량 급감',
+      desc: '구리 및 니켈 수급 불안정 모니터링 필요'
+    },
+    {
+      colorClass: 'bg-secondary-container/10 border-l-4 border-secondary',
+      icon: <AlertTriangle className="text-secondary w-5 h-5" />,
+      title: '글로벌 공급망 다변화 이슈',
+      desc: '동남아시아 대체 공급선 확보 시급'
+    }
+  ];
+
+  // 원부자재 Intelligence 데이터 배열
+  const intelligenceData = [
+    {
+      tag: '철강 (Steel)',
+      tagColor: 'bg-error/10 text-error',
+      hoverBorder: 'hover:border-primary/40',
+      hoverBg: 'hover:bg-primary/5',
+      textHover: 'group-hover:text-primary',
+      title: `국내 주요 제철사, ${new Date().getMonth() + 1}월 출하가 인상 검토`,
+      desc: '포스코, 현대제철 등 국내 주요 제철사가 원가 상승분을 반영하여 가격 인상을 검토 중입니다. 건설 현장 원가 압박 가중 예상.'
+    },
+    {
+      tag: '전기 (Cable)',
+      tagColor: 'bg-secondary/10 text-secondary',
+      hoverBorder: 'hover:border-secondary/40',
+      hoverBg: 'hover:bg-secondary/5',
+      textHover: 'group-hover:text-secondary',
+      title: 'LS전선·대한전선, 구리 시세 연동 단가 에스컬레이션',
+      desc: 'LME 구리 가격이 톤당 1.3만 달러를 돌파하며 전력 케이블 납품가가 급등하고 있습니다. 공공 플랜트 사업의 경우 물가 변동에 따른 계약 금액 조정 신청이 급증하고 있습니다.'
+    },
+    {
+      tag: '식품플랜트사업 자재',
+      tagColor: 'bg-tertiary/10 text-tertiary',
+      hoverBorder: 'hover:border-tertiary/40',
+      hoverBg: 'hover:bg-tertiary/5',
+      textHover: 'group-hover:text-tertiary',
+      title: '식품플랜트사업 위생 배관재 납기 지연 우려',
+      desc: '니켈 등 비철금속 가격 불안정으로 스테인리스 강관 수급이 원활하지 않습니다. 특히 식품 전용 위생 배관재의 경우 국내 재고 부족으로 프로젝트 납기가 평균 2주 지연 중입니다.'
+    },
+    {
+      tag: '시멘트 (Cement)',
+      tagColor: 'bg-primary/10 text-primary',
+      hoverBorder: 'hover:border-primary/40',
+      hoverBg: 'hover:bg-primary/5',
+      textHover: 'group-hover:text-primary',
+      title: '유연탄 가격 하락세 지속, 시멘트 단가 인하 압박',
+      desc: '글로벌 유연탄 가격이 안정세를 보이면서 시멘트 업계에 대한 단가 인하 요구가 거세지고 있습니다. 협상 전략 마련 필요.'
+    },
+    {
+      tag: '물류 (Logistics)',
+      tagColor: 'bg-secondary/10 text-secondary',
+      hoverBorder: 'hover:border-secondary/40',
+      hoverBg: 'hover:bg-secondary/5',
+      textHover: 'group-hover:text-secondary',
+      title: '북미 항로 운임 지수 반등세 전환',
+      desc: '안정세를 보이던 북미 항로 운임이 다시 반등하고 있습니다. 미주 지역 기자재 조달 비용 증가 대비 필요.'
+    }
+  ];
+
+  // 실시간 데이터 Fetch (한국경제 RSS 이용)
+  useEffect(() => {
+    setLoading(true);
+    const feedUrl = 'https://www.hankyung.com/feed/economy';
+    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`)
+      .then(response => {
+        if (response.ok) return response.json();
+        throw new Error('Network response was not ok.');
+      })
+      .then(data => {
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(data.contents, "text/xml");
+        const items = xml.querySelectorAll("item");
+        const allItems = Array.from(items);
+        
+        if (allItems.length >= 7) {
+          // Intelligence (0-2)
+          const intelItems = allItems.slice(0, 3).map((item, idx) => {
+            const title = item.querySelector("title").textContent;
+            const desc = item.querySelector("description").textContent;
+            const tags = ['철강', '전기', '플랜트'];
+            const tagColors = ['bg-error/10 text-error', 'bg-secondary/10 text-secondary', 'bg-tertiary/10 text-tertiary'];
+            const hoverBorders = ['hover:border-primary/40', 'hover:border-secondary/40', 'hover:border-tertiary/40'];
+            const hoverBgs = ['hover:bg-primary/5', 'hover:bg-secondary/5', 'hover:bg-tertiary/5'];
+            const textHovers = ['group-hover:text-primary', 'group-hover:text-secondary', 'group-hover:text-tertiary'];
+            
+            return {
+              tag: tags[idx % tags.length],
+              tagColor: tagColors[idx % tagColors.length],
+              hoverBorder: hoverBorders[idx % hoverBorders.length],
+              hoverBg: hoverBgs[idx % hoverBgs.length],
+              textHover: textHovers[idx % textHovers.length],
+              title: title,
+              desc: desc.replace(/<[^>]*>/g, '').slice(0, 100) + '...'
+            };
+          });
+          
+          // Alerts (3-6)
+          const alertItems = allItems.slice(3, 7).map((item, idx) => {
+            const title = item.querySelector("title").textContent;
+            const colors = [
+              'bg-error-container/10 border-l-4 border-error',
+              'bg-secondary-container/10 border-l-4 border-secondary',
+              'bg-primary-container/10 border-l-4 border-primary',
+              'bg-tertiary-container/10 border-l-4 border-tertiary'
+            ];
+            const icons = [
+              <TrendingUp className="text-error w-5 h-5" />,
+              <AlertTriangle className="text-secondary w-5 h-5" />,
+              <Activity className="text-primary w-5 h-5" />,
+              <ArrowUpRight className="text-tertiary w-5 h-5" />
+            ];
+            return {
+              colorClass: colors[idx % colors.length],
+              icon: icons[idx % icons.length],
+              title: title,
+              desc: '실시간 뉴스 기반 알림'
+            };
+          });
+          
+          setRealtimeIntel(intelItems);
+          setRealtimeAlerts(alertItems);
+        }
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching RSS:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  // 날짜 기반으로 데이터 선택 (매일 바뀜) - 실시간 데이터가 없을 때 폴백으로 사용
+  const selectedAlerts = realtimeAlerts.length > 0 ? realtimeAlerts : [
+    alertsData[day % alertsData.length],
+    alertsData[(day + 1) % alertsData.length],
+    alertsData[(day + 2) % alertsData.length],
+    alertsData[(day + 3) % alertsData.length]
+  ];
+
+  const selectedIntel = realtimeIntel.length > 0 ? realtimeIntel : [
+    intelligenceData[day % intelligenceData.length],
+    intelligenceData[(day + 1) % intelligenceData.length],
+    intelligenceData[(day + 2) % intelligenceData.length]
+  ];
 
   // Curve Generation Logic for SVG
   const generatePath = (data) => {
@@ -292,34 +472,15 @@ const DashboardView = ({ currency, setCurrency, updateTime }) => {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div className="flex items-center gap-4 p-4 bg-error-container/10 border-l-4 border-error rounded-xl glass-panel">
-            <TrendingUp className="text-error w-5 h-5" />
-            <div className="flex-1">
-              <p className="text-sm font-bold">{currency} 환율 변동성 임계치 도달</p>
-              <p className="text-[10px] text-on-surface-variant">수입 결제 시점 조정 권고</p>
+          {selectedAlerts.map((alert, idx) => (
+            <div key={idx} className={`flex items-center gap-4 p-4 ${alert.colorClass} rounded-xl glass-panel`}>
+              {alert.icon}
+              <div className="flex-1">
+                <p className="text-sm font-bold">{alert.title}</p>
+                <p className="text-[10px] text-on-surface-variant">{alert.desc}</p>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center gap-4 p-4 bg-secondary-container/10 border-l-4 border-secondary rounded-xl glass-panel">
-            <AlertTriangle className="text-secondary w-5 h-5" />
-            <div className="flex-1">
-              <p className="text-sm font-bold">중동 지정학적 리스크 심화</p>
-              <p className="text-[10px] text-on-surface-variant">해상 물류비(SCFI) 급등 우려</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 p-4 bg-primary-container/10 border-l-4 border-primary rounded-xl glass-panel">
-            <Activity className="text-primary w-5 h-5" />
-            <div className="flex-1">
-              <p className="text-sm font-bold">국내 산업용 전기요금 추가 인상 가능성</p>
-              <p className="text-[10px] text-on-surface-variant">에너지 다소비 자재(시멘트 등) 단가 영향</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 p-4 bg-tertiary-container/10 border-l-4 border-tertiary rounded-xl glass-panel">
-            <ArrowUpRight className="text-tertiary w-5 h-5" />
-            <div className="flex-1">
-              <p className="text-sm font-bold">중국 철강 생산 감축 본격화</p>
-              <p className="text-[10px] text-on-surface-variant">국내 열연/철근 유통가 반등 전조</p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -330,36 +491,16 @@ const DashboardView = ({ currency, setCurrency, updateTime }) => {
           <h3 className="text-lg font-bold text-on-surface">건설·식품플랜트사업 원부자재 Intelligence (국내 중심)</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="glass-panel p-5 rounded-2xl border border-outline-variant hover:border-primary/40 hover:bg-primary/5 transition-all group">
-            <div className="flex justify-between items-start mb-3">
-              <span className="text-[10px] font-bold bg-error/10 text-error px-2.5 py-1 rounded-lg">철강 (Steel)</span>
-              <span className="text-[9px] text-primary font-bold">{updateTime.split(' ')[1]} 업데이트</span>
+          {selectedIntel.map((intel, idx) => (
+            <div key={idx} className={`glass-panel p-5 rounded-2xl border border-outline-variant ${intel.hoverBorder} ${intel.hoverBg} transition-all group`}>
+              <div className="flex justify-between items-start mb-3">
+                <span className={`text-[10px] font-bold ${intel.tagColor} px-2.5 py-1 rounded-lg`}>{intel.tag}</span>
+                <span className="text-[9px] text-primary font-bold">{updateTime.split(' ')[1]} 업데이트</span>
+              </div>
+              <h4 className={`text-sm font-bold text-on-surface ${intel.textHover} transition-colors`}>{intel.title}</h4>
+              <p className="text-[11px] text-on-surface-variant mt-2 leading-relaxed">{intel.desc}</p>
             </div>
-            <h4 className="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">국내 주요 제철사, 3월 출하가 5% 인상 결정</h4>
-            <p className="text-[11px] text-on-surface-variant mt-2 leading-relaxed">
-              포스코, 현대제철 등 국내 주요 제철사가 산업용 전기료 인상분과 원료탄 가격 상승을 반영하여 H형강 및 철근 가격 인상을 단행했습니다. 건설 현장 원가 압박 가중 예상.
-            </p>
-          </div>
-          <div className="glass-panel p-5 rounded-2xl border border-outline-variant hover:border-secondary/40 hover:bg-secondary/5 transition-all group">
-            <div className="flex justify-between items-start mb-3">
-              <span className="text-[10px] font-bold bg-secondary/10 text-secondary px-2.5 py-1 rounded-lg">전기 (Cable)</span>
-              <span className="text-[9px] text-primary font-bold">{updateTime.split(' ')[1]} 업데이트</span>
-            </div>
-            <h4 className="text-sm font-bold text-on-surface group-hover:text-secondary transition-colors">LS전선·대한전선, 구리 시세 연동 단가 에스컬레이션</h4>
-            <p className="text-[11px] text-on-surface-variant mt-2 leading-relaxed">
-              LME 구리 가격이 톤당 1.3만 달러를 돌파하며 전력 케이블 납품가가 급등하고 있습니다. 공공 플랜트 사업의 경우 물가 변동에 따른 계약 금액 조정 신청이 급증하고 있습니다.
-            </p>
-          </div>
-          <div className="glass-panel p-5 rounded-2xl border border-outline-variant hover:border-tertiary/40 hover:bg-tertiary/5 transition-all group">
-            <div className="flex justify-between items-start mb-3">
-              <span className="text-[10px] font-bold bg-tertiary/10 text-tertiary px-2.5 py-1 rounded-lg">식품플랜트사업 자재</span>
-              <span className="text-[9px] text-primary font-bold">{updateTime.split(' ')[1]} 업데이트</span>
-            </div>
-            <h4 className="text-sm font-bold text-on-surface group-hover:text-tertiary transition-colors">식품플랜트사업 위생 배관재 납기 지연 우려</h4>
-            <p className="text-[11px] text-on-surface-variant mt-2 leading-relaxed">
-              니켈 등 비철금속 가격 불안정으로 스테인리스 강관 수급이 원활하지 않습니다. 특히 식품 전용 위생 배관재의 경우 국내 재고 부족으로 프로젝트 납기가 평균 2주 지연 중입니다.
-            </p>
-          </div>
+          ))}
         </div>
       </section>
     </motion.div>

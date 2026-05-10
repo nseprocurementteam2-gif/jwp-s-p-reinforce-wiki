@@ -7,45 +7,70 @@
 
 @layer base {
   :root {
-    --primary: #346859;
-    --primary-container: #b4ebd8;
-    --on-primary: #ffffff;
-    --on-primary-container: #386c5d;
-    
-    --secondary: #765b06;
-    --secondary-container: #ffd97d;
-    --on-secondary: #ffffff;
-    --on-secondary-container: #785d09;
-    
-    --tertiary: #874f4c;
-    --tertiary-container: #ffd6d3;
-    --on-tertiary: #ffffff;
-    --on-tertiary-container: #8b5350;
-    
-    --background: #faf9f6;
-    --on-background: #1a1c1a;
-    
-    --surface: #faf9f6;
-    --on-surface: #1a1c1a;
-    --surface-variant: #e3e2e0;
-    --on-surface-variant: #404945;
-    
-    --outline: #707975;
-    --outline-variant: #c0c9c4;
-    
-    --error: #ba1a1a;
+    --surface-dim: #dbdad7;
     --error-container: #ffdad6;
+    --inverse-surface: #2f312f;
+    --secondary-fixed-dim: #e7c269;
+    --primary-fixed: #b7eedb;
+    --outline: #707975;
+    --surface-variant: #e3e2e0;
+    --primary-fixed-dim: #9bd2bf;
+    --error: #ba1a1a;
+    --background: #faf9f6;
+    --on-error: #ffffff;
+    --on-tertiary: #ffffff;
+    --primary: #346859;
+    --outline-variant: #c0c9c4;
+    --on-surface-variant: #404945;
+    --secondary-container: #ffd97d;
+    --surface-container-highest: #e3e2e0;
+    --surface-bright: #faf9f6;
+    --surface-container-lowest: #ffffff;
+    --primary-container: #b4ebd8;
+    --tertiary-container: #ffd6d3;
+    --secondary-fixed: #ffdf96;
+    --on-tertiary-container: #8b5350;
+    --surface-container-low: #f4f3f1;
+    --tertiary: #874f4c;
+    --on-secondary-fixed: #251a00;
+    --on-tertiary-fixed-variant: #6b3836;
+    --on-secondary-container: #785d09;
+    --secondary: #765b06;
+    --inverse-primary: #9bd2bf;
+    --on-surface: #1a1c1a;
+    --on-error-container: #93000a;
+    --on-primary-fixed-variant: #194f42;
+    --tertiary-fixed-dim: #fcb4b0;
+    --surface-container-high: #e9e8e5;
+    --surface: #faf9f6;
+    --surface-container: #F2F4F3;
+    --surface: #FFFFFF;
+    --on-surface: #1A1C1A;
+    --primary: #346859;
+    --secondary: #765B06;
+    --tile-shadow: rgba(0, 0, 0, 0.08);
   }
 
   body {
-    @apply bg-background text-on-background font-sans;
+    @apply bg-[#F2F4F3] text-on-surface font-sans;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100dvh;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
 @layer components {
+  .tile-card {
+    @apply bg-white rounded-[24px] border-b-[6px] transition-all active:translate-y-[2px] active:border-b-[2px];
+  }
+  
+  .tile-primary { @apply border-[#9BD2BF]; }
+  .tile-secondary { @apply border-[#E7C269]; }
+  .tile-tertiary { @apply border-[#FCB4B0]; }
+  .tile-surface { @apply border-[#DBDAD7]; }
+
   .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 24;
     display: inline-block;
     vertical-align: middle;
   }
@@ -54,16 +79,12 @@
     font-variation-settings: 'FILL' 1;
   }
 
-  .press-effect {
-    @apply transition-all active:translate-y-[2px];
+  .press-effect:active {
+    transform: translateY(2px);
   }
 
-  .cottage-card {
-    @apply bg-white rounded-[32px] border-b-4 border-surface-variant shadow-sm transition-all hover:scale-[1.01];
-  }
-
-  .bento-card {
-    @apply transition-all duration-300 hover:scale-[1.02];
+  .cottage-card-shadow {
+    box-shadow: 0 4px 0 0 rgba(180, 235, 216, 0.5);
   }
 
   .inner-glow-top {
@@ -89,4 +110,19 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  .bento-card {
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .bento-card:hover {
+    @apply scale-[1.02];
+  }
+
+  /* Typography utilities to match Stitch config */
+  .font-headline-lg { font-size: 26px; line-height: 34px; font-weight: 800; }
+  .font-headline-md { font-size: 20px; line-height: 28px; font-weight: 700; }
+  .font-body-lg { font-size: 17px; line-height: 24px; font-weight: 600; }
+  .font-body-md { font-size: 15px; line-height: 22px; font-weight: 500; }
+  .font-label-lg { font-size: 13px; line-height: 18px; letter-spacing: 0.02em; font-weight: 700; }
+  .font-label-sm { font-size: 11px; line-height: 14px; font-weight: 600; }
 }
