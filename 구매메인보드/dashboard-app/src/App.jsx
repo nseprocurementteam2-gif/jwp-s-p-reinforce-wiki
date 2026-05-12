@@ -105,13 +105,12 @@ const DashboardView = ({ currency, setCurrency, updateTime }) => {
   const [realtimeAlerts, setRealtimeAlerts] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  const currencyData = {
+  const [currencyData, setCurrencyData] = useState({
     USD: { 
       label: 'USD / KRW (원/달러)', 
       value: '1,458.50', 
       change: '+1.2%', 
       trend: 'up',
-      // 12주(3개월) 주단위 데이터
       history: [1380, 1405, 1395, 1410, 1425, 1420, 1435, 1445, 1440, 1450, 1445, 1458]
     },
     JPY: { 
@@ -128,7 +127,108 @@ const DashboardView = ({ currency, setCurrency, updateTime }) => {
       trend: 'down',
       history: [1740, 1735, 1745, 1730, 1720, 1725, 1715, 1710, 1705, 1708, 1712, 1703]
     }
-  };
+  });
+
+  const [commodities, setCommodities] = useState({
+    gold: { value: '$4,705.20', change: '+2.15% 급등', trend: 'up' },
+    copper: { value: '$13,391.50', change: '+0.84%', trend: 'up' },
+    oil: { value: '$101.27', change: '-1.8% 하락', trend: 'down' }
+  });
+
+  useEffect(() => {
+    const fetchNaverFinance = async () => {
+      try {
+        const url = 'https://finance.naver.com/marketindex/';
+        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+        if (response.ok) {
+          const data = await response.json();
+          const html = data.contents;
+          
+          // 파이썬 테스트에서 성공한 정규식 방식으로 변경하여 인덱스 일치 보장
+          const values = [];
+          const valueRegex = /<span class="value">([^<]+)<\/span>/g;
+          let match;
+          while ((match = valueRegex.exec(html)) !== null) {
+            values.push(match[1].trim());
+          }
+          
+          if (values.length >= 10) {
+            const usdKrw = values[0];
+            const jpyKrw = values[1];
+            const eurKrw = values[2];
+            const oilWti = values[8];
+            const goldSpot = values[9];
+            
+            setCurrencyData(prev => {
+              const next = { ...prev };
+              
+              next.USD.value = usdKrw;
+              const usdNum = parseFloat(usdKrw.replace(/,/g, ''));
+              if (!isNaN(usdNum)) next.USD.history = [...next.USD.history.slice(1), usdNum];
+              
+              next.JPY.value = jpyKrw;
+              const jpyNum = parseFloat(jpyKrw.replace(/,/g, ''));
+              if (!isNaN(jpyNum)) next.JPY.history = [...next.JPY.history.slice(1), jpyNum];
+              
+              next.EUR.value = eurKrw;
+              const eurNum = parseFloat(eurKrw.replace(/,/g, ''));
+              if (!isNaN(eurNum)) next.EUR.history = [...next.EUR.history.slice(1), eurNum];
+              
+              return next;
+            });
+            
+            setCommodities(prev => ({
+              ...prev,
+              gold: { ...prev.gold, value: `$${goldSpot}` },
+              oil: { ...prev.oil, value: `$${oilWti}` }
+            }));
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching Naver Finance:', error);
+      }
+    };
+    
+    fetchNaverFinance();
+    const interval = setInterval(fetchNaverFinance, 3600000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const fetchCopperPrice = async () => {
+      try {
+        const url = 'https://www.investing.com/indices/lme-daily';
+        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+        if (response.ok) {
+          const data = await response.json();
+          const html = data.contents;
+          
+          const regex = /"shortname_translated":"Copper".*?"Last":([0-9.]+).*?"Chg":"([^"]+)"/;
+          const match = html.match(regex);
+          if (match) {
+            const price = parseFloat(match[1]);
+            const chg = match[2];
+            const priceMT = price * 2204.62;
+            
+            setCommodities(prev => ({
+              ...prev,
+              copper: { 
+                value: `$${priceMT.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 
+                change: `${parseFloat(chg) >= 0 ? '+' : ''}${chg}`,
+                trend: parseFloat(chg) >= 0 ? 'up' : 'down' 
+              }
+            }));
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching Copper price:', error);
+      }
+    };
+    
+    fetchCopperPrice();
+    const interval = setInterval(fetchCopperPrice, 3600000);
+    return () => clearInterval(interval);
+  }, []);
 
   const selectedData = currencyData[currency];
 
@@ -223,7 +323,7 @@ const DashboardView = ({ currency, setCurrency, updateTime }) => {
     }
   ];
 
-  // 실시간 데이터 Fetch (한국경제 RSS 이용)
+  // 실시간 데이터 Fetch (한국경제 RSS 기반 키워드 필터링)
   useEffect(() => {
     setLoading(true);
     const feedUrl = 'https://www.hankyung.com/feed/economy';
@@ -233,36 +333,106 @@ const DashboardView = ({ currency, setCurrency, updateTime }) => {
         throw new Error('Network response was not ok.');
       })
       .then(data => {
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(data.contents, "text/xml");
-        const items = xml.querySelectorAll("item");
-        const allItems = Array.from(items);
-        
-        if (allItems.length >= 7) {
-          // Intelligence (0-2)
-          const intelItems = allItems.slice(0, 3).map((item, idx) => {
-            const title = item.querySelector("title").textContent;
-            const desc = item.querySelector("description").textContent;
-            const tags = ['철강', '전기', '플랜트'];
-            const tagColors = ['bg-error/10 text-error', 'bg-secondary/10 text-secondary', 'bg-tertiary/10 text-tertiary'];
-            const hoverBorders = ['hover:border-primary/40', 'hover:border-secondary/40', 'hover:border-tertiary/40'];
-            const hoverBgs = ['hover:bg-primary/5', 'hover:bg-secondary/5', 'hover:bg-tertiary/5'];
-            const textHovers = ['group-hover:text-primary', 'group-hover:text-secondary', 'group-hover:text-tertiary'];
-            
-            return {
-              tag: tags[idx % tags.length],
-              tagColor: tagColors[idx % tagColors.length],
-              hoverBorder: hoverBorders[idx % hoverBorders.length],
-              hoverBg: hoverBgs[idx % hoverBgs.length],
-              textHover: textHovers[idx % textHovers.length],
-              title: title,
-              desc: desc.replace(/<[^>]*>/g, '').slice(0, 100) + '...'
-            };
-          });
+        const contents = data.contents;
+        const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+        const matches = [...contents.matchAll(itemRegex)];
+        const allItems = matches.map(match => {
+          const itemContent = match[1];
+          const titleMatch = itemContent.match(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/) || itemContent.match(/<title>([\s\S]*?)<\/title>/);
+          const descMatch = itemContent.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/) || itemContent.match(/<description>([\s\S]*?)<\/description>/);
           
-          // Alerts (3-6)
-          const alertItems = allItems.slice(3, 7).map((item, idx) => {
-            const title = item.querySelector("title").textContent;
+          return {
+            title: titleMatch ? titleMatch[1].trim() : '제목 없음',
+            desc: descMatch ? descMatch[1].trim() : ''
+          };
+        });
+        
+        // 건설, 식품, 플랜트 각 영역에 맞는 뉴스 추출
+        const constructionKeywords = ['건설', '건축', '시멘트', '철강', '골재'];
+        const foodKeywords = ['식품', '농산물', '곡물', '배관재', '축산'];
+        const plantKeywords = ['플랜트', '공장', '설비', '장비', '기자재'];
+        
+        const findItemByKeywords = (items, keywords) => {
+          return items.find(item => {
+            return keywords.some(kw => item.title.includes(kw) || item.desc.includes(kw));
+          });
+        };
+        
+        const constructionItem = findItemByKeywords(allItems, constructionKeywords);
+        const foodItem = findItemByKeywords(allItems, foodKeywords);
+        const plantItem = findItemByKeywords(allItems, plantKeywords);
+        
+        // Intelligence (3개 영역 고정)
+        const intelItems = [];
+        
+        // 1. 건설
+        if (constructionItem) {
+          intelItems.push({
+            tag: '건설',
+            tagColor: 'bg-error/10 text-error',
+            hoverBorder: 'hover:border-primary/40',
+            hoverBg: 'hover:bg-primary/5',
+            textHover: 'group-hover:text-primary',
+            title: `[실시간] ${constructionItem.title}`,
+            desc: constructionItem.desc.replace(/<[^>]*>/g, '').slice(0, 100) + '...'
+          });
+        } else {
+          intelItems.push({
+            ...intelligenceData[0],
+            tag: '건설',
+            title: '건설 원부자재 시황 (실시간 뉴스 없음)',
+            desc: '현재 건설 관련 실시간 뉴스가 없어 기본 시황 정보를 표시합니다. 시멘트 및 골재 가격 모니터링 필요.'
+          });
+        }
+        
+        // 2. 식품
+        if (foodItem) {
+          intelItems.push({
+            tag: '식품',
+            tagColor: 'bg-secondary/10 text-secondary',
+            hoverBorder: 'hover:border-primary/40',
+            hoverBg: 'hover:bg-primary/5',
+            textHover: 'group-hover:text-primary',
+            title: `[실시간] ${foodItem.title}`,
+            desc: foodItem.desc.replace(/<[^>]*>/g, '').slice(0, 100) + '...'
+          });
+        } else {
+          intelItems.push({
+            ...intelligenceData[2],
+            tag: '식품',
+            title: '식품플랜트사업 위생 배관재 납기 지연 우려',
+            desc: '니켈 등 비철금속 가격 불안정으로 스테인리스 강관 수급이 원활하지 않습니다. 대체 공급선 확보 필요.'
+          });
+        }
+        
+        // 3. 플랜트
+        if (plantItem) {
+          intelItems.push({
+            tag: '플랜트',
+            tagColor: 'bg-tertiary/10 text-tertiary',
+            hoverBorder: 'hover:border-primary/40',
+            hoverBg: 'hover:bg-primary/5',
+            textHover: 'group-hover:text-primary',
+            title: `[실시간] ${plantItem.title}`,
+            desc: plantItem.desc.replace(/<[^>]*>/g, '').slice(0, 100) + '...'
+          });
+        } else {
+          intelItems.push({
+            ...intelligenceData[1],
+            tag: '플랜트',
+            title: '플랜트 기자재 단가 에스컬레이션 리스크',
+            desc: 'LME 구리 및 니켈 가격 변동으로 인한 플랜트 기자재 납품가 변동성이 커지고 있습니다.'
+          });
+        }
+        
+        // Alerts (Intelligence에 사용되지 않은 나머지 뉴스들로 채움)
+        const usedItems = [constructionItem, foodItem, plantItem].filter(Boolean);
+        const unusedItems = allItems.filter(item => !usedItems.includes(item));
+        
+        const alertItems = [];
+        for (let i = 0; i < 4; i++) {
+          if (i < unusedItems.length) {
+            const item = unusedItems[i];
             const colors = [
               'bg-error-container/10 border-l-4 border-error',
               'bg-secondary-container/10 border-l-4 border-secondary',
@@ -275,17 +445,19 @@ const DashboardView = ({ currency, setCurrency, updateTime }) => {
               <Activity className="text-primary w-5 h-5" />,
               <ArrowUpRight className="text-tertiary w-5 h-5" />
             ];
-            return {
-              colorClass: colors[idx % colors.length],
-              icon: icons[idx % icons.length],
-              title: title,
-              desc: '실시간 뉴스 기반 알림'
-            };
-          });
-          
-          setRealtimeIntel(intelItems);
-          setRealtimeAlerts(alertItems);
+            alertItems.push({
+              colorClass: colors[i % colors.length],
+              icon: icons[i % icons.length],
+              title: `[실시간] ${item.title}`,
+              desc: '실시간 뉴스 기반 알림 (출처: 한국경제)'
+            });
+          } else {
+            alertItems.push(alertsData[i % alertsData.length]);
+          }
         }
+        
+        setRealtimeIntel(intelItems);
+        setRealtimeAlerts(alertItems);
         setLoading(false);
       })
       .catch(error => {
@@ -423,33 +595,39 @@ const DashboardView = ({ currency, setCurrency, updateTime }) => {
         {/* Triple Indicators */}
         <div className="glass-card border-t-2 border-secondary/30">
           <p className="text-xs uppercase tracking-wider text-on-surface-variant mb-1">Gold (spot oz)</p>
-          <p className="text-2xl font-bold font-space text-on-surface">$4,705.20</p>
+          <p className="text-2xl font-bold font-space text-on-surface">{commodities.gold.value}</p>
           <div className="mt-4 flex justify-between items-end">
-            <span className="text-error text-xs font-bold">+2.15% 급등</span>
-            <div className="h-6 w-16 bg-error/10 rounded overflow-hidden">
-               <div className="h-full w-full bg-error/40" style={{ clipPath: 'polygon(0 80%, 25% 60%, 50% 40%, 75% 20%, 100% 10%, 100% 100%, 0 100%)' }}></div>
+            <span className={`text-xs font-bold ${commodities.gold.trend === 'up' ? 'text-error' : 'text-tertiary'}`}>
+              {commodities.gold.change}
+            </span>
+            <div className={`h-6 w-16 rounded overflow-hidden ${commodities.gold.trend === 'up' ? 'bg-error/10' : 'bg-tertiary/10'}`}>
+               <div className={`h-full w-full ${commodities.gold.trend === 'up' ? 'bg-error/40' : 'bg-tertiary/40'}`} style={{ clipPath: 'polygon(0 80%, 25% 60%, 50% 40%, 75% 20%, 100% 10%, 100% 100%, 0 100%)' }}></div>
             </div>
           </div>
         </div>
 
         <div className="glass-card border-t-2 border-primary/30">
           <p className="text-xs uppercase tracking-wider text-on-surface-variant mb-1">Copper (LME/MT)</p>
-          <p className="text-2xl font-bold font-space text-on-surface">$13,391.50</p>
+          <p className="text-2xl font-bold font-space text-on-surface">{commodities.copper.value}</p>
           <div className="mt-4 flex justify-between items-end">
-            <span className="text-on-tertiary-container text-xs font-bold">+0.84%</span>
-            <div className="h-6 w-16 bg-tertiary-container rounded overflow-hidden">
-               <div className="h-full w-full bg-on-tertiary-container/40" style={{ clipPath: 'polygon(0 80%, 25% 60%, 50% 40%, 75% 20%, 100% 10%, 100% 100%, 0 100%)' }}></div>
+            <span className={`text-xs font-bold ${commodities.copper.trend === 'up' ? 'text-on-tertiary-container' : 'text-tertiary'}`}>
+              {commodities.copper.change}
+            </span>
+            <div className={`h-6 w-16 rounded overflow-hidden ${commodities.copper.trend === 'up' ? 'bg-tertiary-container' : 'bg-tertiary/10'}`}>
+               <div className={`h-full w-full ${commodities.copper.trend === 'up' ? 'bg-on-tertiary-container/40' : 'bg-tertiary/40'}`} style={{ clipPath: 'polygon(0 80%, 25% 60%, 50% 40%, 75% 20%, 100% 10%, 100% 100%, 0 100%)' }}></div>
             </div>
           </div>
         </div>
 
         <div className="glass-card border-t-2 border-tertiary/30">
           <p className="text-xs uppercase tracking-wider text-on-surface-variant mb-1">Brent Oil (bbl)</p>
-          <p className="text-2xl font-bold font-space text-on-surface">$101.27</p>
+          <p className="text-2xl font-bold font-space text-on-surface">{commodities.oil.value}</p>
           <div className="mt-4 flex justify-between items-end">
-            <span className="text-tertiary text-xs font-bold">-1.8% 하락</span>
-            <div className="h-6 w-16 bg-tertiary/10 rounded overflow-hidden">
-               <div className="h-full w-full bg-tertiary/40" style={{ clipPath: 'polygon(0 20%, 25% 40%, 50% 60%, 75% 80%, 100% 90%, 100% 100%, 0 100%)' }}></div>
+            <span className={`text-xs font-bold ${commodities.oil.trend === 'up' ? 'text-error' : 'text-tertiary'}`}>
+              {commodities.oil.change}
+            </span>
+            <div className={`h-6 w-16 rounded overflow-hidden ${commodities.oil.trend === 'up' ? 'bg-error/10' : 'bg-tertiary/10'}`}>
+               <div className={`h-full w-full ${commodities.oil.trend === 'up' ? 'bg-error/40' : 'bg-tertiary/40'}`} style={{ clipPath: 'polygon(0 20%, 25% 40%, 50% 60%, 75% 80%, 100% 90%, 100% 100%, 0 100%)' }}></div>
             </div>
           </div>
         </div>
@@ -512,7 +690,7 @@ const InputModal = ({ isOpen, onClose, data, onSave }) => {
   const [formData, setFormData] = useState(data);
   const [isParsing, setIsParsing] = useState(false);
   const [isQuotationParsing, setIsQuotationParsing] = useState(false);
-  const [useBM, setUseBM] = useState(true);
+  const [useBM, setUseBM] = useState(false);
   const [useQuotationBM, setUseQuotationBM] = useState(false);
 
   useEffect(() => {
@@ -590,14 +768,22 @@ const InputModal = ({ isOpen, onClose, data, onSave }) => {
                 <input type="file" accept=".pdf" className="absolute inset-0 opacity-0 cursor-pointer z-10" 
                   onChange={(e) => {
                     setIsParsing(true);
-                    setTimeout(() => {
-                      setFormData(prev => ({
-                        ...prev,
-                        breakdown: { material: 220000000, labor: 150000000, expense: 80000000 },
-                        baseCost: 450000000
-                      }));
-                      setIsParsing(false);
-                    }, 1000);
+                    // 파이썬 백엔드 서버에서 정부 품셈 데이터(가상)를 가져옵니다.
+                    fetch('http://127.0.0.1:8000/api/v1/standard-estimation/food')
+                      .then(res => res.json())
+                      .then(data => {
+                        setFormData(prev => ({
+                          ...prev,
+                          breakdown: data.breakdown,
+                          baseCost: data.baseCost
+                        }));
+                        setIsParsing(false);
+                      })
+                      .catch(err => {
+                        console.error(err);
+                        alert('백엔드 서버와 통신에 실패했습니다. 서버가 켜져 있는지 확인하세요.');
+                        setIsParsing(false);
+                      });
                   }}
                 />
                 <div className="bg-primary/5 border border-dashed border-primary/30 rounded-2xl p-6 text-center group-hover:bg-primary/10 transition-all">
@@ -636,7 +822,7 @@ const InputModal = ({ isOpen, onClose, data, onSave }) => {
             <div className="flex justify-between items-center">
               <h4 className="text-xs font-bold text-secondary uppercase tracking-widest flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
-                2. 소싱업체 제출가 (최종 제출)
+                2. 견적업체 제출가 (최종 제출)
               </h4>
               <div className="flex bg-white/5 rounded-lg p-0.5 border border-white/10">
                 <button onClick={() => setUseQuotationBM(true)} className={`px-2 py-1 text-[9px] rounded-md transition-all ${useQuotationBM ? 'bg-secondary text-slate-900 font-bold' : 'text-slate-400'}`}>견적서 연동</button>
@@ -661,7 +847,7 @@ const InputModal = ({ isOpen, onClose, data, onSave }) => {
                 />
                 <div className="bg-secondary/5 border border-dashed border-secondary/30 rounded-2xl p-6 text-center group-hover:bg-secondary/10 transition-all">
                   {isQuotationParsing ? <div className="animate-spin w-4 h-4 border-2 border-secondary border-t-transparent rounded-full mx-auto" /> : <FileText size={20} className="text-secondary mx-auto mb-2"/>}
-                  <p className="text-[10px] text-white font-bold">소싱업체 제출서류 PDF 업로드</p>
+                  <p className="text-[10px] text-white font-bold">견적업체 제출서류 PDF 업로드</p>
                 </div>
               </div>
             ) : (
@@ -696,7 +882,7 @@ const InputModal = ({ isOpen, onClose, data, onSave }) => {
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-2">
               <Users size={18} className="text-secondary" />
-              <h4 className="text-xs font-bold text-white uppercase tracking-widest">소싱업체별 제출가 관리 (최대 5개)</h4>
+              <h4 className="text-xs font-bold text-white uppercase tracking-widest">견적업체별 제출가 관리 (최대 5개)</h4>
             </div>
             {formData.vendors.length < 5 && (
               <button 
@@ -708,7 +894,7 @@ const InputModal = ({ isOpen, onClose, data, onSave }) => {
                 }}
                 className="text-[10px] bg-secondary/20 text-secondary border border-secondary/30 px-3 py-1.5 rounded-xl hover:bg-secondary/30 transition-all font-bold"
               >
-                + 소싱업체 추가
+                + 견적업체 추가
               </button>
             )}
           </div>
@@ -717,7 +903,7 @@ const InputModal = ({ isOpen, onClose, data, onSave }) => {
             {formData.vendors.map((vendor, idx) => (
               <div key={idx} className="flex gap-3 items-end bg-white/5 p-4 rounded-2xl border border-white/5 hover:border-white/10 transition-all group">
                 <div className="flex-1">
-                  <label className="text-[8px] text-slate-500 mb-1 block font-bold uppercase">소싱업체 {idx + 1} 명칭</label>
+                  <label className="text-[8px] text-slate-500 mb-1 block font-bold uppercase">견적업체 {idx + 1} 명칭</label>
                   <input 
                     type="text" 
                     value={vendor.name} 
@@ -757,7 +943,7 @@ const InputModal = ({ isOpen, onClose, data, onSave }) => {
             ))}
             {formData.vendors.length === 0 && (
               <div className="col-span-2 py-8 text-center border-2 border-dashed border-white/5 rounded-3xl">
-                <p className="text-[10px] text-slate-500 font-bold uppercase">등록된 소싱업체가 없습니다. 우측 상단 버튼을 눌러 추가하세요.</p>
+                <p className="text-[10px] text-slate-500 font-bold uppercase">등록된 견적업체가 없습니다. 우측 상단 버튼을 눌러 추가하세요.</p>
               </div>
             )}
           </div>
@@ -787,26 +973,26 @@ const CostStandardView = () => {
   const [standardData, setStandardData] = useState({
     food: {
       title: "식품플랜트사업",
-      baseCost: 450000000,
-      breakdown: { material: 220000000, labor: 150000000, expense: 80000000 },
-      quotationCost: 465000000,
-      quotationBreakdown: { material: 235000000, labor: 145000000, expense: 85000000 },
+      baseCost: 0,
+      breakdown: { material: 0, labor: 0, expense: 0 },
+      quotationCost: 0,
+      quotationBreakdown: { material: 0, labor: 0, expense: 0 },
       vendors: []
     },
     construction: {
       title: "건설사업",
-      baseCost: 1200000000,
-      breakdown: { material: 650000000, labor: 400000000, expense: 150000000 },
-      quotationCost: 1180000000,
-      quotationBreakdown: { material: 630000000, labor: 410000000, expense: 140000000 },
+      baseCost: 0,
+      breakdown: { material: 0, labor: 0, expense: 0 },
+      quotationCost: 0,
+      quotationBreakdown: { material: 0, labor: 0, expense: 0 },
       vendors: []
     },
     intelligence: {
       title: "지능화사업",
-      baseCost: 850000000,
-      breakdown: { material: 400000000, labor: 350000000, expense: 100000000 },
-      quotationCost: 820000000,
-      quotationBreakdown: { material: 380000000, labor: 340000000, expense: 100000000 },
+      baseCost: 0,
+      breakdown: { material: 0, labor: 0, expense: 0 },
+      quotationCost: 0,
+      quotationBreakdown: { material: 0, labor: 0, expense: 0 },
       vendors: []
     }
   });
@@ -901,7 +1087,7 @@ const CostStandardView = () => {
           <div className="h-10 w-px bg-outline-variant hidden md:block" />
           <div className="text-right">
             <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">
-              {lowestVendor ? `소싱 최저가 (${lowestVendor.name})` : "소싱업체 제출가"}
+              {lowestVendor ? `견적 최저가 (${lowestVendor.name})` : "견적업체 제출가"}
             </p>
             <p className="text-2xl font-bold text-secondary font-space">₩{displayQuotationCost.toLocaleString()}</p>
           </div>
@@ -930,7 +1116,7 @@ const CostStandardView = () => {
                 <span className="text-lg font-bold text-on-surface">₩{(current.breakdown?.[item.key] || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-end pb-2 border-b border-white/5">
-                <span className="text-[11px] text-slate-500">소싱업체 제출가</span>
+                <span className="text-[11px] text-slate-500">견적업체 제출가</span>
                 <span className="text-lg font-bold text-secondary">₩{(current.quotationBreakdown?.[item.key] || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center pt-2">
@@ -949,7 +1135,7 @@ const CostStandardView = () => {
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-sm font-bold flex items-center gap-2">
               <TrendingUp size={18} className="text-secondary"/>
-              소싱업체별 제출가 자동 비교 분석
+              견적업체별 제출가 자동 비교 분석
             </h3>
             <span className="text-[10px] text-on-surface-variant">데이터 소스: 정부 공인 표준품셈 DB</span>
           </div>
