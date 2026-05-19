@@ -8,7 +8,7 @@ def get_wav_duration(file_path):
         return duration
 
 if __name__ == "__main__":
-    audio_path = r"c:\Users\NSE\.connect-ai-brain\myyoutube\저는 AI랑 대화해서 퇴근합니다.wav"
+    audio_path = r"c:\Users\NSE\.connect-ai-brain\myyoutube\꼰대 부장의 이중생활 .wav"
     try:
         dur = get_wav_duration(audio_path)
         print(f"오디오 듀레이션: {dur:.3f} 초")
