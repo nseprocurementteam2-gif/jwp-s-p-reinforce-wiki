@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#dbdad7",
+                    "error-container": "#ffdad6",
+                    "inverse-surface": "#2f312f",
+                    "secondary-fixed-dim": "#e7c269",
+                    "primary-fixed": "#b7eedb",
+                    "outline": "#707975",
+                    "surface-variant": "#e3e2e0",
+                    "primary-fixed-dim": "#9bd2bf",
+                    "error": "#ba1a1a",
+                    "background": "#faf9f6",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#346859",
+                    "outline-variant": "#c0c9c4",
+                    "on-surface-variant": "#404945",
+                    "secondary-container": "#ffd97d",
+                    "surface-container-highest": "#e3e2e0",
+                    "surface-bright": "#faf9f6",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#b4ebd8",
+                    "tertiary-container": "#ffd6d3",
+                    "secondary-fixed": "#ffdf96",
+                    "on-tertiary-container": "#8b5350",
+                    "surface-container-low": "#f4f3f1",
+                    "tertiary": "#874f4c",
+                    "on-secondary-fixed": "#251a00",
+                    "on-tertiary-fixed-variant": "#6b3836",
+                    "on-secondary-container": "#785d09",
+                    "secondary": "#765b06",
+                    "inverse-primary": "#9bd2bf",
+                    "on-surface": "#1a1c1a",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#194f42",
+                    "tertiary-fixed-dim": "#fcb4b0",
+                    "surface-container-high": "#e9e8e5",
+                    "surface": "#faf9f6",
+                    "surface-container": "#efeeeb",
+                    "tertiary-fixed": "#ffdad7",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed": "#002019",
+                    "inverse-on-surface": "#f2f1ee",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#360e0d",
+                    "on-secondary-fixed-variant": "#594400",
+                    "on-primary-container": "#386c5d",
+                    "surface-tint": "#346859",
+                    "on-background": "#1a1c1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1200px",
+                    "gutter": "16px",
+                    "unit": "8px",
+                    "margin": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-xl": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "500"}],
+                    "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-shadow-tactile {
+            text-shadow: 0 2px 0 rgba(0,0,0,0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body-md text-on-background overflow-hidden h-screen w-screen flex flex-col">
+<header class="fixed top-0 w-full z-50 border-b-4 border-emerald-200/50 bg-[#B4EBD8] flex justify-between items-center px-6 py-4 max-w-screen-xl mx-auto shadow-[0_4px_0_0_rgba(180,235,216,0.5)]">
+<div class="flex items-center gap-3">
+<div class="relative w-12 h-12 rounded-full border-4 border-white shadow-sm overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A charming character portrait of a young gourmet explorer wearing a green scout hat and a neckerchief. The illustration is in a soft, cottagecore digital painting style with warm, golden hour lighting. The character is framed by a circular badge with a seasonal wreath of autumn leaves and small berries, representing a high achievement level." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdsKSvKCjDLKgG0BXueT0rB8xDGi2kux4XoIbmSkj8IK0yGDBB78yPK2vdgRN0s4DtKLzn6MyEVkUEySRCOlDIYzBBJKZROGc12ZnyOeqV-pu29DKH8J7S9bcLREkvb7deIdTL-O3nSRD266B8KEDVSWf_4e-maFj7X8c259kxo1wAfy6CI-gFDHjAEjRX2suTgl1MwIhhI9CEjb2kkMcVuhQ4PjcFG3GnfXJDRB2i5xQbmpzMEM22fK5TNq9O_Eoi61ew_03np02j"/>
+</div>
+<span class="font-headline-md text-emerald-900">Novice Gourmet</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-white/40 rounded-full border-2 border-white/60">
+<span class="material-symbols-outlined text-emerald-900" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<span class="font-label-lg text-emerald-900">Level 12</span>
+</div>
+</header>
+<main class="flex-1 relative overflow-hidden mt-16 pb-24">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover filter blur-[1px]" data-alt="A stylized, top-down isometric map of a charming village in Japan during springtime. The map features soft pastel greens and pinks representing cherry blossoms. Tiny, cute icons of stalls and bakeries are scattered across the winding cobblestone paths. The lighting is soft and ambient, creating a cozy and inviting gaming atmosphere consistent with a tactile cottagecore aesthetic." data-location="Kyoto, Japan" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbD9PodtTX2KB3VCV3PkLtDlcUx31sj8RJF1uTHOwwygK_UM9c1lUN54jbtwZwT6HeQVLznQ38dm96ykag1GC4DQbqXh5SvWWCs_eonxYhjTTqr5LqH4X1Q95uFM8OzwZTHquP8erTQhWRa88atB8akVdFmDZ-ZJ885_w1MXdkAf4A_sfFFQcU1sNNZs7h6BEA6nG5UnYXaZxy6zC0FJzXqbRA-E00Jka5PwyMr_a77ryKVPyWyiPTVLddopDQpyV8jmvrZyLSS2KJ"/>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="w-16 h-16 bg-primary rounded-full border-4 border-white shadow-lg flex items-center justify-center animate-bounce">
+<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">person_pin_circle</span>
+</div>
+</div>
+<div class="absolute top-1/3 left-2/3 flex flex-col items-center">
+<div class="w-12 h-12 bg-secondary-container rounded-xl border-4 border-white shadow-md flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">storefront</span>
+</div>
+<div class="mt-2 bg-white px-3 py-1 rounded-full border-2 border-secondary-container shadow-sm">
+<span class="text-label-sm text-secondary">Berry Shop</span>
+</div>
+</div>
+</div>
+<div class="absolute inset-0 bg-black/30 backdrop-blur-[2px] z-10 flex items-center justify-center p-margin">
+<div class="bg-surface-container-lowest w-full max-w-md rounded-[32px] border-b-[8px] border-secondary overflow-hidden shadow-2xl">
+<div class="bg-secondary-fixed p-6 flex flex-col items-center text-center gap-2 border-b-4 border-secondary-fixed-dim">
+<div class="px-4 py-1 bg-white/90 rounded-full border-2 border-secondary mb-2 animate-pulse">
+<span class="font-label-lg text-secondary uppercase tracking-widest">Lucky Chance!</span>
+</div>
+<h2 class="font-headline-lg text-on-secondary-fixed leading-tight">Specialty Alert: Fresh Strawberries within 50m!</h2>
+</div>
+<div class="p-8 flex flex-col gap-6 items-center">
+<div class="relative w-full aspect-video rounded-2xl overflow-hidden border-4 border-surface-container-high bg-surface-container shadow-inner group">
+<img class="w-full h-full object-cover" data-alt="A high-quality, close-up photograph of a charming wooden market stall displaying baskets of vibrant, glistening red strawberries. The background shows a soft-focus view of a quaint Japanese street with a traditional noren curtain. The lighting is bright and natural, highlighting the textures of the fresh fruit and the rustic wood of the stall, evoking a sense of seasonal freshness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGU8k3dNoNXQXhuPyg_Ykfr4o9n0iJUBFvyjLON27REw7h7O44DAGDIXWCWoS5icMTRzKjC5fNRbTWx6MqwH6-AikhlcCtSiMsNSb1EmS39Z0assp0hAD3qUH2D27uL6OOeEmFIGhcls6jjdLPesVF5bYcdTgZzaRuJaId3I5YCt-qqXutrhXMKEUPZTrzXa6tsl8IkpxlIRh-Swy5pVId3ylMKEy1PXE1xzoTSkksDYi8YjJMnTwp-bv7Wqj-CfZKn9H6Z0zg9n_n"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+<p class="text-white font-label-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">image</span>
+                                Store Hint Photo
+                            </p>
+</div>
+</div>
+<div class="flex items-center gap-6 w-full">
+<div class="w-24 h-24 shrink-0 relative">
+<img class="w-full h-full object-contain" data-alt="A cute, chibi-style character illustration with a large head and expressive eyes, pointing enthusiastically to the right. The character is dressed in a cozy, cream-colored knitted sweater and a green beret. The style is soft-edged with gentle gradients, set against a clean white background, meant to act as a helpful guide in the UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAZaxSgYSUEsgX5qzmU9b3flhYyW4QgXwOYxB2F4IQLgkjpgToGPIw9lIU17pCJzOZ6ORhPql89zN-MUWozO4QAU5FfnkkA_mZCTkdGhGTfjIS7V2UiQHlzruAKJsO6fb8s9FB3pgyRJyporcN4qdEPnBPtZ6UNFwyFWhgst9VgQoVH_XZDFuyMe-xuFa6JRc0X16R2bdKfxFO08RBEGwlIpoNkI3DmxfLbTJcRRsbGZvJoJLWETsOjXVD-lwLD6OKXIP7bjrFyOde"/>
+</div>
+<div class="flex-1 bg-surface-container-low p-4 rounded-2xl border-2 border-dashed border-outline-variant relative">
+<div class="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-surface-container-low rotate-45 border-l-2 border-b-2 border-dashed border-outline-variant"></div>
+<p class="text-body-md text-on-surface-variant italic">"Look! That stall with the red striped awning just around the corner has the best harvest today!"</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 w-full">
+<button class="bg-white border-2 border-outline-variant text-on-surface font-label-lg py-4 rounded-2xl flex items-center justify-center gap-2 active:translate-y-[2px] transition-all shadow-[0_4px_0_0_#c0c9c4] hover:bg-surface-container-low">
+<span class="material-symbols-outlined">visibility</span>
+                            Check Hint
+                        </button>
+<button class="bg-secondary-container border-2 border-secondary text-on-secondary-container font-label-lg py-4 rounded-2xl flex items-center justify-center gap-2 active:translate-y-[2px] transition-all shadow-[0_4px_0_0_#785d09] hover:brightness-105">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">near_me</span>
+                            Get Directions
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<nav class="fixed bottom-0 left-0 w-full z-50 border-t-4 border-emerald-50 bg-white rounded-t-[24px] shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<div class="flex justify-around items-end w-full px-4 pb-6 pt-2 max-w-screen-xl mx-auto">
+<button class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 hover:bg-emerald-50 transition-all active:scale-95">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 hover:bg-emerald-50 transition-all active:scale-95">
+<span class="material-symbols-outlined mb-1">inventory_2</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider">Collection</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 hover:bg-emerald-50 transition-all active:scale-95">
+<span class="material-symbols-outlined mb-1">photo_camera</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider">Camera</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 hover:bg-emerald-50 transition-all active:scale-95">
+<span class="material-symbols-outlined mb-1">group</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider">Community</span>
+</button>
+</div>
+</nav>
+</body></html>

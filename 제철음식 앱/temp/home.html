@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Novice Gourmet - Quest Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#dbdad7",
+                    "error-container": "#ffdad6",
+                    "inverse-surface": "#2f312f",
+                    "secondary-fixed-dim": "#e7c269",
+                    "primary-fixed": "#b7eedb",
+                    "outline": "#707975",
+                    "surface-variant": "#e3e2e0",
+                    "primary-fixed-dim": "#9bd2bf",
+                    "error": "#ba1a1a",
+                    "background": "#faf9f6",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#346859",
+                    "outline-variant": "#c0c9c4",
+                    "on-surface-variant": "#404945",
+                    "secondary-container": "#ffd97d",
+                    "surface-container-highest": "#e3e2e0",
+                    "surface-bright": "#faf9f6",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#b4ebd8",
+                    "tertiary-container": "#ffd6d3",
+                    "secondary-fixed": "#ffdf96",
+                    "on-tertiary-container": "#8b5350",
+                    "surface-container-low": "#f4f3f1",
+                    "tertiary": "#874f4c",
+                    "on-secondary-fixed": "#251a00",
+                    "on-tertiary-fixed-variant": "#6b3836",
+                    "on-secondary-container": "#785d09",
+                    "secondary": "#765b06",
+                    "inverse-primary": "#9bd2bf",
+                    "on-surface": "#1a1c1a",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#194f42",
+                    "tertiary-fixed-dim": "#fcb4b0",
+                    "surface-container-high": "#e9e8e5",
+                    "surface": "#faf9f6",
+                    "surface-container": "#efeeeb",
+                    "tertiary-fixed": "#ffdad7",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed": "#002019",
+                    "inverse-on-surface": "#f2f1ee",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#360e0d",
+                    "on-secondary-fixed-variant": "#594400",
+                    "on-primary-container": "#386c5d",
+                    "surface-tint": "#346859",
+                    "on-background": "#1a1c1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1200px",
+                    "gutter": "16px",
+                    "unit": "8px",
+                    "margin": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-xl": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "500"}],
+                    "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .press-effect:active {
+            transform: translateY(2px);
+        }
+        .bento-card {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .bento-card:hover {
+            transform: scale(1.02);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+  @keyframes scroll-left {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+  .ticker-scroll {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: scroll-left 25s linear infinite;
+  }
+</style></head>
+<body class="bg-background font-body-md text-on-background selection:bg-primary-container">
+<!-- TopAppBar -->
+<header class="bg-[#B4EBD8] dark:bg-slate-900 fixed top-0 w-full z-50 border-b-4 border-emerald-200/50 dark:border-emerald-950 shadow-[0_4px_0_0_rgba(180,235,216,0.5)] dark:shadow-none">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-screen-xl mx-auto">
+<div class="flex items-center gap-3">
+<div class="relative group cursor-pointer">
+<div class="w-12 h-12 rounded-full border-4 border-white shadow-sm overflow-hidden bg-white">
+<img class="w-full h-full object-cover" data-alt="A whimsical, high-quality digital illustration of a cute chibi-style explorer character wearing a chef's hat decorated with small green sprouts. The character is framed within a circular golden seasonal ring with floral spring patterns. The lighting is soft and cheerful, with a warm morning glow reflecting the cottagecore gamification aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKPScLHnYOazqSCRMT0_JGDB-fGp7x94yFZEypVc04Pz52huUruQVRG9irLaUvajeXMxI_yQhuQ_bMpknGAXZmg1nS3E133_jrIWskW1KKJjwjy4-RBYNDRwbGgUk-YD88Sn9Y7wLPcWpZ6y1NFZMWwZUO0nnsEJNRWOvwEyt42JGiEJGf9XFTmaBnMjtEWoGHoCf79EyLmdG08RaL9Ae31MHDDmPy462fIqO7aRrhHX-oJJXvfoHOM5aXkiWdMcEa3LOnkgwctWbG"/>
+</div>
+<div class="absolute -bottom-1 -right-1 bg-secondary-container text-on-secondary-container text-[10px] font-bold px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm">
+                        Lv.12
+                    </div>
+</div>
+<div class="flex flex-col">
+<span class="text-lg font-black text-emerald-950 dark:text-white leading-tight font-['Plus_Jakarta_Sans']">Novice Gourmet</span>
+<span class="text-xs font-bold text-emerald-800/70 dark:text-slate-400 uppercase tracking-widest">Spring Season</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="bg-white/40 p-2 rounded-xl text-emerald-900 hover:bg-emerald-100/50 transition-colors active:translate-y-[2px]">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+</button>
+</div>
+</div>
+<div class="bg-secondary text-on-secondary py-1 overflow-hidden border-b-2 border-secondary-fixed/30">
+<div class="max-w-screen-xl mx-auto flex items-center px-6">
+<div class="flex items-center gap-2 bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter mr-4 z-10 shrink-0">
+<span class="material-symbols-outlined text-xs">campaign</span> LIVE
+    </div>
+<div class="relative flex-1 overflow-hidden">
+<div class="ticker-scroll font-label-sm flex gap-12">
+<span>Gyeongju: Fresh spring strawberries spotted at the central market! 🍓</span>
+<span>Jeju: Hallabong season is at its peak! 🍊</span>
+<span>Hadong: First flush green tea leaves are ready for harvest! 🍃</span>
+<span>Yangpyeong: Wild chives are abundant near the riverside! 🌱</span>
+</div>
+</div>
+</div>
+</div></header>
+<main class="pb-32 px-margin max-w-container-max mx-auto pt-36">
+<!-- Hero Section: Progress & Stats -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-8">
+<div class="lg:col-span-8 bg-primary-container p-6 rounded-[32px] shadow-[0_4px_0_0_#9bd2bf] flex flex-col justify-between">
+<div>
+<h2 class="font-headline-lg text-on-primary-container mb-2">Adventure Progress</h2>
+<p class="font-body-md text-on-primary-container opacity-80 mb-6">You're 240 XP away from becoming a <span class="font-bold underline">Seasonal Sous-Chef</span>!</p>
+</div>
+<div class="relative pt-4">
+<div class="flex justify-between mb-2">
+<span class="font-label-lg text-on-primary-container">Level 12</span>
+<span class="font-label-lg text-on-primary-container">Level 13</span>
+</div>
+<div class="h-6 w-full bg-white/40 rounded-full overflow-hidden p-1">
+<div class="h-full bg-primary rounded-full relative" style="width: 75%;">
+<div class="absolute right-0 top-0 h-full w-4 bg-white/20 skew-x-12"></div>
+</div>
+</div>
+<!-- Milestones -->
+<div class="absolute top-8 left-[25%] -translate-x-1/2">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="energy_savings_leaf">energy_savings_leaf</span>
+</div>
+<div class="absolute top-8 left-[50%] -translate-x-1/2">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="local_florist" data-weight="fill" style="font-variation-settings: 'FILL' 1;">local_florist</span>
+</div>
+<div class="absolute top-8 left-[75%] -translate-x-1/2">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="grade">grade</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 bg-secondary-container p-6 rounded-[32px] shadow-[0_4px_0_0_#e7c269] flex flex-col items-center justify-center text-center">
+<div class="w-20 h-20 bg-white/50 rounded-full flex items-center justify-center mb-4 border-4 border-white">
+<span class="material-symbols-outlined text-secondary text-4xl" data-icon="restaurant" data-weight="fill" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<h3 class="font-headline-md text-on-secondary-container">14 Recipes</h3>
+<p class="font-label-lg text-on-secondary-container opacity-70">Mastered this Season</p>
+<button class="mt-4 px-6 py-2 bg-white rounded-2xl font-bold text-secondary shadow-[0_4px_0_0_#efeeeb] active:translate-y-1 transition-all">
+                    View Log
+                </button>
+</div>
+</section>
+<!-- Bento Grid: Quests & Seasonal Spotlight -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Daily Quest List -->
+<div class="lg:col-span-1 bg-surface-container rounded-[32px] p-6 shadow-[0_4px_0_0_#dbdad7]">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-md text-on-surface">Daily Quests</h3>
+<span class="bg-error-container text-on-error-container font-label-sm px-2 py-1 rounded-lg">2h Left</span>
+</div>
+<div class="space-y-4">
+<!-- Quest Item -->
+<div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-b-4 border-surface-dim press-effect">
+<div class="w-12 h-12 bg-primary-fixed rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="shopping_basket">shopping_basket</span>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-on-surface">Catch the Spring Strawberry</p>
+<p class="text-xs text-outline italic">Find local farm varieties</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+</div>
+<div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-b-4 border-surface-dim press-effect">
+<div class="w-12 h-12 bg-tertiary-fixed rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="set_meal">set_meal</span>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-on-surface">Taste the Spring Sea Bream</p>
+<p class="text-xs text-outline italic">Identify Sakura Tai texture</p>
+</div>
+<span class="material-symbols-outlined text-primary" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex items-center gap-4 bg-white p-4 rounded-2xl border-b-4 border-surface-dim opacity-60">
+<div class="w-12 h-12 bg-surface-variant rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-outline" data-icon="bakery_dining">bakery_dining</span>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-on-surface">Gather Wild Herbs</p>
+<p class="text-xs text-outline italic">Unlock at Lv. 15</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="lock">lock</span>
+</div>
+</div>
+</div>
+<!-- Tonight's Seasonal Dish -->
+<div class="lg:col-span-2 bg-white rounded-[32px] overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-b-4 border-surface-container flex flex-col md:flex-row">
+<div class="md:w-1/2 relative h-64 md:h-full min-h-[300px]">
+<img class="w-full h-full object-cover" data-alt="A gourmet close-up photo of a seasonal spring dish: Seared Sea Bream served over a bed of vibrant green pea purée, garnished with fresh sakura petals and wild asparagus tips. The plating is artistic and rustic, captured in bright, natural daylight with soft focus on a light wooden tabletop. The colors are dominated by fresh greens, soft pinks, and golden seared fish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLWtLtVDoXBKMoQUty8yVad4evHcThUeCxMktBt9xm5u5UtsTsDKtuj6Xm4KvRo5kuHJ9yHFgJMr0zSChEbpdoi849SIBuxQ7RBDWkxDxYpwA3Nn4eNwUWCQxK0xZ3177XFqQADqf1czu617egKFsBgLZmvQNXBVcXsRtaKYSBqam2578vm1HILbQBlxrhZ7tMQbOztmSf3J2r4YH-i4HiKu8T7YCSYVesmD8V7K-UXT2gvJspVLQUKyV7dz-ujNCgDltY5vP23wqX"/>
+<div class="absolute top-4 left-4 bg-primary text-white font-label-sm px-3 py-1 rounded-full shadow-lg">
+                        Tonight's Spotlight
+                    </div>
+</div>
+<div class="md:w-1/2 p-8 flex flex-col justify-center">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-secondary" data-icon="stars" data-weight="fill" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="font-label-lg text-secondary uppercase">Rare Specialty</span>
+</div>
+<h3 class="font-headline-lg text-on-surface mb-4 leading-tight">Sakura-Smoked Sea Bream with Wild Asparagus</h3>
+<p class="font-body-md text-on-surface-variant mb-6">
+                        A delicate harmony of early spring flavors. The gentle smoke of cherry wood enhances the buttery texture of the bream, paired with hand-foraged wild greens.
+                    </p>
+<div class="flex gap-4">
+<button class="flex-1 bg-primary text-on-primary font-bold py-4 rounded-2xl shadow-[0_4px_0_0_#194f42] press-effect transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-xl" data-icon="menu_book">menu_book</span>
+                            Cook Recipe
+                        </button>
+<button class="w-14 h-14 border-4 border-surface-container rounded-2xl flex items-center justify-center text-outline hover:bg-surface-container-low transition-colors press-effect">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Collection Sneak Peek -->
+<div class="lg:col-span-1 bg-tertiary-container rounded-[32px] p-6 shadow-[0_4px_0_0_#fcb4b0]">
+<h3 class="font-headline-md text-on-tertiary-container mb-4 text-center">Spring Album</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="aspect-square bg-white rounded-2xl border-4 border-white overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Macro photo of a glistening red strawberry with morning dew, set against a soft bokeh background of a sunny farm. High-key lighting, vibrant reds and greens." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwKf5Yz4rwkE9nWJZgfeMu3oLQob9SJcBoiiwbMTZT-Rli58TSGxM6ZxuVpoZwnRzbltUXbRV3V5aycFXr0drfcZiRjIWrmYzIomtMdudXQcLW5NqJASBdf4RVJunZq4eegJpsVlV-JNquvwYYBn1WjH8QiOgayi2KN77ausjmEJR_OLQOYAo5Ubk1C-DJTE0w5Obd_5_C-XiwXXXaBIZpQxv7AtpyyM0NstXpwFjYfCkrct-3OLwc0yV5EpD7nKX69MgSg34FjZ1Z"/>
+</div>
+<div class="aspect-square bg-white rounded-2xl border-4 border-white overflow-hidden shadow-sm grayscale opacity-40">
+<div class="w-full h-full flex items-center justify-center bg-surface-container-low text-outline">
+<span class="material-symbols-outlined text-4xl" data-icon="photo_camera">photo_camera</span>
+</div>
+</div>
+<div class="aspect-square bg-white rounded-2xl border-4 border-white overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Detailed shot of tender green pea shoots spiraling upwards, illuminated by golden hour sunlight. Fresh, crisp cottagecore aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnxqPVF4v_vQ9Pgn2lPKR7xV_5uYn2cN4510zWvlaf5k9-W-JCpi4dxhDYN9BvH3O0UuiMZoSVRu3V1-EG9u3EzeKfhvR9KtSdiWfo1bupsX0W9ufdsCTmElAkek-cluDuq-u0L70zLEv17itXFBgPhnkrvl7lFznh4rIkDwNmZekc2YB1gfiVOVwKb1y4Z460SzWvoAlXTFm2lhSDDaz2AkT8eW7hycArt9rKn3kBzfkjMIaTzCdCI4DRaigNNPLinK773_iTNnUt"/>
+</div>
+<div class="aspect-square bg-white rounded-2xl border-4 border-white overflow-hidden shadow-sm flex items-center justify-center">
+<span class="font-headline-md text-tertiary">+8</span>
+</div>
+</div>
+<button class="w-full mt-4 font-label-lg text-tertiary-fixed-variant flex items-center justify-center gap-1 hover:underline">
+                    View Collection <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Community Activity -->
+<div class="lg:col-span-2 bg-surface-bright rounded-[32px] p-6 border-4 border-emerald-50">
+<h3 class="font-headline-md text-primary mb-6">Recent Finds Nearby</h3>
+<div class="flex overflow-x-auto gap-6 pb-2 no-scrollbar">
+<div class="flex-shrink-0 w-64 bg-white p-4 rounded-3xl shadow-sm border border-surface-variant/50">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-full bg-primary-fixed overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User avatar 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9lQ7-FEx2NkOgmTTmALok_u2bZaK64mjPwcLP33iz35lLLB6SvfKMx7cqWTrduPz0zYJiwX7zlYPo2eyjJ0JNNAOKlQRTePQKIbkkA95YDfervOyyeJLroaOJeMXATWFQoY6PVP7ujLgcBx7SQH1enuXwDMvVdarRZ9pDVm-pCWMc5FsMi0YmYdGhdzUz0RxrjIW3WSprO7CLcC9yR09LvsaS19ywvB6QSeHk7860imPBOzsNNcbXk80SmXjMlMjUFEONMfnPBAJK"/>
+</div>
+<span class="font-label-lg text-on-surface">Chef Maple</span>
+</div>
+<img class="w-full h-40 object-cover rounded-2xl mb-3" data-alt="A small glass jar of local golden honey on a rustic wooden fence post, with blurred spring blossoms in the background. Bright, saturated yellow tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM1OTx_qsEdbjxbgwMM-wBVxmxzO1CNCCc9HCq58sKq_b5U679QnSm_utzdNef3pKY336Q2XFsI-pJMPRhLjAyX2mXXavt9UC93ok2fICoBOp-isfzqLv5IwrUvz73BirhOjUlDa8ZTTuVzSa5MObwSo6FDSpvEka8CG36qxmVIRE-AieyeYxmvpTtg2-27hae3L-mpVSTd0OMknnhq0Gb-p6d-tAa8FZ3JXqC871a7qtk_jFS9na3dfjOjb482a2k2Ju_duazM99B"/>
+<p class="text-sm font-medium text-on-surface-variant">Found: Wild Mountain Honey</p>
+</div>
+<div class="flex-shrink-0 w-64 bg-white p-4 rounded-3xl shadow-sm border border-surface-variant/50">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User avatar 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEz-lLNwKC65MKNXONEmDaKEgVEgFAAkItcg2H0e_bGpEUV13k-z3sE4cR3oEnOLGp06JfjTIfj59of34D5SM88h34KihflT0jNsm04v8fd2o3V8ENZ5UGN1Sx85T3HouZvu1jmMXMaCNaS-y1unwFLTh-VMlzC6L0fDhNy_TxEesdLw8re7kEgWuiDEQtSSeFDdj22uHStEa67myWnPtPxRx4apI9_kurvDfUjVO9eWdixeaegud0Hz7kEpsdrcPs33fRmbaNfIaK"/>
+</div>
+<span class="font-label-lg text-on-surface">Forager Finn</span>
+</div>
+<img class="w-full h-40 object-cover rounded-2xl mb-3" data-alt="Close-up of small white mushrooms emerging from dark mossy earth, soft forest lighting with cool tones. Ethereal and magical mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoWJoEiRX7arAiQGgpY7aq6liQpEg7EYKed1O62FuUhNUMwUiEqFNuAGxiMm69Kev5tM5LernMVDUExEa4qtKjawIqNhYagdArMwmVAw5-CqgIq3U0pmSBc4nTTebaytTTfNOixqOB9RlhNa-dGyjHSdTpqaMv_P3DJpPGC06kgxFAhQEGLyzK8s9oUVG_IHpz92m5Q8vb2vP3NaW6j5XE9VlU-fqgDknmuNbI4PC8aAUjqd6WZZ9w24FWtj_WzQOP1zFSABYoe3xd"/>
+<p class="text-sm font-medium text-on-surface-variant">Found: White Button Clump</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-32 right-8 w-16 h-16 bg-primary text-on-primary rounded-full shadow-[0_8px_20px_rgba(52,104,89,0.3)] flex items-center justify-center z-50 hover:scale-110 active:scale-95 transition-all border-4 border-primary-container">
+<span class="material-symbols-outlined text-3xl" data-icon="photo_camera" data-weight="fill" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="bg-white dark:bg-slate-950 fixed bottom-0 left-0 w-full z-50 border-t-4 border-emerald-50 dark:border-slate-800 rounded-t-[24px] shadow-[0_-4px_12px_rgba(0,0,0,0.05)] dark:shadow-none md:hidden">
+<div class="flex justify-around items-end w-full px-4 pb-6 pt-2">
+<button class="flex flex-col items-center justify-center bg-emerald-100 dark:bg-emerald-900/50 text-emerald-900 dark:text-emerald-100 rounded-[16px] px-5 py-2 translate-y-[-4px] border-b-4 border-emerald-300 dark:border-emerald-700 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 px-5 py-2 hover:bg-emerald-50 dark:hover:bg-slate-900 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider mt-1">Collection</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 px-5 py-2 hover:bg-emerald-50 dark:hover:bg-slate-900 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider mt-1">Camera</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 px-5 py-2 hover:bg-emerald-50 dark:hover:bg-slate-900 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider mt-1">Community</span>
+</button>
+</div>
+</nav>
+<!-- Desktop Nav in Top Bar -->
+<style>
+        @media (min-width: 768px) {
+            .desktop-nav { display: flex !important; }
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script>
+        // Placeholder for semantic logic: If on Home, apply style_active_navigation
+        // TopAppBar already has the branding. Let's add desktop links inside it via script injection for realism.
+        const navContainer = document.querySelector('header > div');
+        const desktopNav = document.createElement('div');
+        desktopNav.className = "hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2";
+        desktopNav.innerHTML = `
+            <a href="#" class="text-emerald-900 dark:text-emerald-50 font-bold border-b-2 border-emerald-900">Home</a>
+            <a href="#" class="text-emerald-800/70 dark:text-slate-400 font-bold hover:text-emerald-900 transition-colors">Collection</a>
+            <a href="#" class="text-emerald-800/70 dark:text-slate-400 font-bold hover:text-emerald-900 transition-colors">Camera</a>
+            <a href="#" class="text-emerald-800/70 dark:text-slate-400 font-bold hover:text-emerald-900 transition-colors">Community</a>
+        `;
+        navContainer.appendChild(desktopNav);
+    </script>
+</body></html>

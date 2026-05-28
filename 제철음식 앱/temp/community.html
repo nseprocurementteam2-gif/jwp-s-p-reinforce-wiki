@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#dbdad7",
+                    "error-container": "#ffdad6",
+                    "inverse-surface": "#2f312f",
+                    "secondary-fixed-dim": "#e7c269",
+                    "primary-fixed": "#b7eedb",
+                    "outline": "#707975",
+                    "surface-variant": "#e3e2e0",
+                    "primary-fixed-dim": "#9bd2bf",
+                    "error": "#ba1a1a",
+                    "background": "#faf9f6",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#346859",
+                    "outline-variant": "#c0c9c4",
+                    "on-surface-variant": "#404945",
+                    "secondary-container": "#ffd97d",
+                    "surface-container-highest": "#e3e2e0",
+                    "surface-bright": "#faf9f6",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#b4ebd8",
+                    "tertiary-container": "#ffd6d3",
+                    "secondary-fixed": "#ffdf96",
+                    "on-tertiary-container": "#8b5350",
+                    "surface-container-low": "#f4f3f1",
+                    "tertiary": "#874f4c",
+                    "on-secondary-fixed": "#251a00",
+                    "on-tertiary-fixed-variant": "#6b3836",
+                    "on-secondary-container": "#785d09",
+                    "secondary": "#765b06",
+                    "inverse-primary": "#9bd2bf",
+                    "on-surface": "#1a1c1a",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#194f42",
+                    "tertiary-fixed-dim": "#fcb4b0",
+                    "surface-container-high": "#e9e8e5",
+                    "surface": "#faf9f6",
+                    "surface-container": "#efeeeb",
+                    "tertiary-fixed": "#ffdad7",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed": "#002019",
+                    "inverse-on-surface": "#f2f1ee",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#360e0d",
+                    "on-secondary-fixed-variant": "#594400",
+                    "on-primary-container": "#386c5d",
+                    "surface-tint": "#346859",
+                    "on-background": "#1a1c1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1200px",
+                    "gutter": "16px",
+                    "unit": "8px",
+                    "margin": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-xl": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "500"}],
+                    "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .cottage-card-shadow {
+            box-shadow: 0 4px 0 0 rgba(180, 235, 216, 0.5);
+        }
+        .button-press-effect:active {
+            transform: translateY(2px);
+        }
+        .inner-glow-top {
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-[#B4EBD8] dark:bg-slate-900 fixed top-0 w-full z-50 border-b-4 border-emerald-200/50 dark:border-emerald-950 shadow-[0_4px_0_0_rgba(180,235,216,0.5)] dark:shadow-none">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-screen-xl mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-4 border-white bg-white overflow-hidden shadow-sm">
+<img alt="User" class="w-full h-full object-cover" data-alt="A stylized character portrait in a soft, cottagecore digital art style. The character is a cheerful young chef wearing a rustic linen apron and a woven straw hat. The lighting is warm and golden, reminiscent of a late summer afternoon. The background is a soft-focus orchard with emerald green leaves and pastel fruits, matching the primary-container color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBh7M5R7z7mVtQ6vmNkZYaYTePaBvLxo4RNjBee-QJ1AzPdnIsp1xxuX4QytWAL3KCQ8d4t1RC2noctq1fh8ag4OtgtNnkcr2HkhdUNXaLqbEUg-JBrtykjZp1-uVcqrs_JyZJAUP_lPuNrvBke8i7NSbFsB5iLI0QSv28N5Vn4ybKr_SZT4lT-JAJcHc7Gnf8r8GQAME5zQOxb3yoc1hUz3UBXtEEoof2QbnLqN-Y4kBTk2e7-6o5NhV9PZ8J_UVFAtCRg48E13LlS"/>
+</div>
+<span class="text-lg font-black text-emerald-950 dark:text-white font-headline-md">Novice Gourmet</span>
+</div>
+<button class="flex items-center justify-center p-2 rounded-full bg-emerald-100/50 hover:bg-emerald-100 dark:hover:bg-emerald-800/30 transition-all active:translate-y-[2px]">
+<span class="material-symbols-outlined text-emerald-900" data-icon="military_tech">military_tech</span>
+</button>
+</div>
+</header>
+<main class="pt-24 px-margin max-w-screen-xl mx-auto space-y-8">
+<!-- Hot Places Section (Bento Style) -->
+<section>
+<div class="flex items-center justify-between mb-4 px-2">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Hot Places</h2>
+<span class="text-label-lg font-label-lg text-primary uppercase">View Map</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Large Map Tile -->
+<div class="md:col-span-2 bg-surface-container rounded-[24px] p-6 border-b-4 border-surface-dim relative overflow-hidden h-[240px] group cursor-pointer">
+<div class="absolute inset-0 z-0 opacity-40 group-hover:scale-105 transition-transform duration-500">
+<img class="w-full h-full object-cover" data-alt="A whimsical, illustrated map of a coastal town during autumn, rendered in a playful RPG adventure style. The map features tiny icons for pumpkin patches, fishing docks, and specialty bakeries. The color palette is dominated by warm ambers, deep forest greens, and soft sky blues. The lighting is soft and ambient, evoking a cozy, explorative mood." data-location="Kyoto, Japan" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvAq2d822F_igIZ2blejVWY3Y3_EJ5_zQl-wAc3e25wbCKwNrqhlJCAUGTalKXWB5dXKbuDdthuRdnfWl50op3NJT62h8Lme4s8KInJC_T951gVP3jZ_1ybjL1Hukj_NgwXUshepGvs7KnmQ5ldG-p8REOJ6Cdlrc353tuIAClx7gShxpGE-z0sXwtaRyQLQmxhO-whq6xGHrREj9mkGQxB1LMCEvvjjnDm2X7BCVXkhF6C-9kUuwHYKaEr0OBFkB8tspkGVK3xBdS"/>
+</div>
+<div class="relative z-10 h-full flex flex-col justify-end">
+<div class="bg-white/90 backdrop-blur-md p-4 rounded-xl border-b-2 border-emerald-100 w-fit">
+<h3 class="font-headline-md text-headline-md text-emerald-900">Autumnal Orchards</h3>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span class="text-label-sm">North Valley, Kyoto</span>
+</div>
+</div>
+</div>
+</div>
+<!-- List Side Tiles -->
+<div class="grid grid-rows-2 gap-4">
+<div class="bg-secondary-container rounded-[24px] p-4 border-b-4 border-secondary-fixed-dim flex items-center gap-4 hover:translate-y-[-2px] transition-transform cursor-pointer">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="bakery_dining">bakery_dining</span>
+</div>
+<div>
+<p class="font-bold text-on-secondary-container">Sugar Bloom</p>
+<p class="text-label-sm text-on-secondary-container/80">Rare Pastries</p>
+</div>
+</div>
+<div class="bg-tertiary-container rounded-[24px] p-4 border-b-4 border-tertiary-fixed-dim flex items-center gap-4 hover:translate-y-[-2px] transition-transform cursor-pointer">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-tertiary" data-icon="set_meal">set_meal</span>
+</div>
+<div>
+<p class="font-bold text-on-tertiary-container">Harbor Grill</p>
+<p class="text-label-sm text-on-tertiary-container/80">Seasonal Catch</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Community Feed -->
+<section class="space-y-6">
+<h2 class="font-headline-lg text-headline-lg text-on-surface px-2">Community Discoveries</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Feed Card 1 -->
+<article class="bg-white rounded-[32px] overflow-hidden border-b-4 border-emerald-50 shadow-sm cottage-card-shadow">
+<div class="p-6 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="User Avatar" class="w-12 h-12 rounded-full border-4 border-white shadow-sm" data-alt="A detailed character icon of a young forager girl with braids and a green cloak. She has a curious expression and is surrounded by a glowing emerald ring that signifies a high level in the Harvest specialty. The artwork is clean, soft-shaded, and follows a tactile game aesthetic with pastel highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxVIK0NqY36ossGVAs-fbu5w1hSsPYHEx-afCxf0c0IHtgXLCZDR20HhGpw1kYpSIxoLPhRsH-lXqWWgQhZaqf1TRWiQtC_pr8GAIzJTkvGuA0dUBrKQWIa_XrB6-k0h5LwBttkX4_aD3it_fEYGvIxJgbCK4hV1JDMlqv8EGxwRsWcXTmGA0ITWSWHx9AM8BhRTq9PL49pSj6bGmg6wtkqSkRJzlk9SarUuSBX0YMeS599-uOJeZDe67jo_Xjp4o0mfBv0Xq92SDm"/>
+<div class="absolute -bottom-1 -right-1 bg-secondary p-1 rounded-full border-2 border-white">
+<span class="material-symbols-outlined text-[12px] text-white" data-icon="stars" data-weight="fill">stars</span>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Mushroom_Master</h4>
+<span class="text-label-sm text-outline px-2 py-0.5 bg-surface-container rounded-full">Rank: Elder Forager</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="more_horiz">more_horiz</span>
+</div>
+<div class="mx-6 h-64 rounded-[24px] overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A macro photograph of a rare, glowing forest mushroom nestled in dark damp moss. The mushroom has a soft golden hue and is surrounded by small magical sparkles, emphasizing its seasonal rarity. The lighting is low-key with high-contrast highlights on the texture of the mushroom's cap. The scene is lush, vibrant, and incredibly detailed, following the cottagecore aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj0gcWllogpZlrbV6XEMg4xzIGfcjAOzYBEZcnPp6OPmaxFvQMr4k-9OCCzZWDN8v3TMcSY0wiApNnmw-zk5idK7do-5is8P-pvX8ZDibijaL8FrUpBa9Yh8cqMlA17wvCeh9DBR1UpnU3UE5puQpwyajb6fgxLer3sUjsW_rN0doUHRZPHlRUs3hl0NKHKCX_dBvluLd7yI6AwUvfDc8NObWLpUojb2sLFj3l1A8FbM-RhAQLlniV54iD7jtdPdxXR6f-7k8iRuF2"/>
+<div class="absolute top-4 right-4 bg-emerald-900/80 backdrop-blur-sm text-white px-3 py-1 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome" data-weight="fill">auto_awesome</span>
+<span class="text-label-sm uppercase">Legendary Find</span>
+</div>
+</div>
+<div class="p-6 space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-primary font-bold">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span>Whispering Woods</span>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 bg-tertiary-container px-4 py-2 rounded-full border-b-4 border-tertiary-fixed-dim button-press-effect">
+<span class="material-symbols-outlined text-tertiary" data-icon="favorite" data-weight="fill">favorite</span>
+<span class="font-bold text-on-tertiary-container">Yum!</span>
+</button>
+<button class="flex items-center gap-2 bg-surface-container px-4 py-2 rounded-full border-b-4 border-outline-variant button-press-effect">
+<span class="material-symbols-outlined text-outline" data-icon="chat_bubble">chat_bubble</span>
+</button>
+</div>
+</div>
+<p class="text-body-md text-on-surface-variant">Finally found the elusive Golden Cap! The rains last night really brought the forest to life. 🍄✨</p>
+</div>
+</article>
+<!-- Feed Card 2 -->
+<article class="bg-white rounded-[32px] overflow-hidden border-b-4 border-emerald-50 shadow-sm cottage-card-shadow">
+<div class="p-6 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="User Avatar" class="w-12 h-12 rounded-full border-4 border-white shadow-sm" data-alt="A character avatar of a cozy baker wearing a flour-dusted apron and a red bandana. The art style is expressive and tactile, with soft watercolor textures and a warm, inviting glow. The character is framed by a seasonal autumn ring of oranges and reds, symbolizing a high collection level for orchard fruits." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwIhwMiIjD8mg6Kc8PeG5xHwRt0B_D7MoOQBjtCe-wCwwdGKhMIfNzCnZYUBzx2MyUyji3N_2bfCBP4YtTrOB8sUpNY5nfkjYO32XrWbVI_rLZUJyhyg9KwYdIhDjRDrBi7XtXkNX2UtK8Bbw7WB52t9Mklql4ELujI3oabxm9PYysjdSyXlrsEyNOpeDLH_VhtKDxgvvhzyZ0CwpSvvXp2m5GbKngSLGeWiE-TgQkKqYsasxxAlie1BummvEOJHn530t7jMypm8ve"/>
+<div class="absolute -bottom-1 -right-1 bg-primary p-1 rounded-full border-2 border-white">
+<span class="material-symbols-outlined text-[12px] text-white" data-icon="recipe" data-weight="fill">cooking</span>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Baker_Ben</h4>
+<span class="text-label-sm text-outline px-2 py-0.5 bg-surface-container rounded-full">Rank: Pie Specialist</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="more_horiz">more_horiz</span>
+</div>
+<div class="mx-6 h-64 rounded-[24px] overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A close-up shot of a rustic apple tart with a perfectly golden, flaky crust. The tart is dusted with cinnamon and served on a weathered wooden table. Soft morning sunlight streams through a window, illuminating the steam rising from the pastry. The aesthetic is high-end cozy, with warm earth tones and a sense of handmade accomplishment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJsWBmi9IWWVm3EokJBL1viqoE22VJNaH3DOW766VfOaN1LlI1Bo7JKE1hLfX1imJTWMDcx7pARBF1IxSnbguZCSe4C-EZxoTI3pgXVMYIkwHQsNhEjG0rU6ZpUwliuHHEPomzdICuxs0V1uBHFJtDsJ46wIk-aXfy0z3oSzoZ56ov11zRXo8S9alUT6mOtbG1qExNBqjHud15ReRsAYIi4N2JkJB7k4yMtVoPpw6QsPxEfUhugyjiMdwg4dnwZtWUPuAsu176yPvI"/>
+<div class="absolute top-4 right-4 bg-orange-900/80 backdrop-blur-sm text-white px-3 py-1 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="timer" data-weight="fill">timer</span>
+<span class="text-label-sm uppercase">Limited Season</span>
+</div>
+</div>
+<div class="p-6 space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-primary font-bold">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span>Sunny Orchard</span>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 bg-tertiary-container px-4 py-2 rounded-full border-b-4 border-tertiary-fixed-dim button-press-effect">
+<span class="material-symbols-outlined text-tertiary" data-icon="favorite" data-weight="fill">favorite</span>
+<span class="font-bold text-on-tertiary-container">Yum!</span>
+</button>
+<button class="flex items-center gap-2 bg-surface-container px-4 py-2 rounded-full border-b-4 border-outline-variant button-press-effect">
+<span class="material-symbols-outlined text-outline" data-icon="chat_bubble">chat_bubble</span>
+</button>
+</div>
+</div>
+<p class="text-body-md text-on-surface-variant">The Honeycrisps are finally ripe! Made this tart with the first harvest of the morning. 🍎🥧</p>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-white dark:bg-slate-950 fixed bottom-0 left-0 w-full z-50 border-t-4 border-emerald-50 dark:border-slate-800 rounded-t-[24px] shadow-[0_-4px_12px_rgba(0,0,0,0.05)] dark:shadow-none">
+<div class="flex justify-around items-end w-full px-4 pb-6 pt-2">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 px-5 py-2 hover:bg-emerald-50 dark:hover:bg-slate-900 transition-all active:scale-95 active:translate-y-0 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider mt-1">Home</span>
+</a>
+<!-- Collection -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 px-5 py-2 hover:bg-emerald-50 dark:hover:bg-slate-900 transition-all active:scale-95 active:translate-y-0 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider mt-1">Collection</span>
+</a>
+<!-- Camera -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 px-5 py-2 hover:bg-emerald-50 dark:hover:bg-slate-900 transition-all active:scale-95 active:translate-y-0 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider mt-1">Camera</span>
+</a>
+<!-- Community (Active) -->
+<a class="flex flex-col items-center justify-center bg-emerald-100 dark:bg-emerald-900/50 text-emerald-900 dark:text-emerald-100 rounded-[16px] px-5 py-2 translate-y-[-4px] border-b-4 border-emerald-300 dark:border-emerald-700 active:scale-95 active:translate-y-0 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="group" data-weight="fill">group</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-bold uppercase tracking-wider mt-1">Community</span>
+</a>
+</div>
+</nav>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-28 right-6 w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-lg border-b-4 border-emerald-900 inner-glow-top z-40 active:translate-y-1 transition-all">
+<span class="material-symbols-outlined text-3xl" data-icon="add_photo_alternate">add_photo_alternate</span>
+</button>
+</body></html>
