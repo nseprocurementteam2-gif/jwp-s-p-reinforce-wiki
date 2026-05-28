@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "notebooklm": {
+      "command": "uv",
+      "args": [
+        "run",
+        "notebooklm-mcp"
+      ],
+      "env": {
+        "NOTEBOOKLM_SESSION_ID": "g.a000-AhOZqfyzptO7jA_lQBMYNAE9yUMVIOtBTwL-npdRSW2eT5E9daLoU8DZqZ4Ab4-uhJjDgACgYKAc8SARUSFQHGX2Mix7OTwgMK_t36fTyF-yev1xoVAUF8yKrv1NOdkU4wm0XYK6978nKB0076",
+        "NOTEBOOKLM_NOTEBOOK_ID": "6640a387-d727-42a0-95bb-a78aac80b46d"
+      }
+    }
+  }
+}

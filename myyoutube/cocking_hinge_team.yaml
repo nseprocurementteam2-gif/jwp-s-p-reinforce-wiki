@@ -1,0 +1,37 @@
+name: NotebookLM_Cocking_Hinge_Shorts_Team
+description: NotebookLM MCP를 활용하여 골프 코킹과 힌지의 심층 코칭 내용을 분석하고 쇼츠를 제작하는 다중 에이전트 협업 파이프라인
+
+agents:
+  notebooklm_researcher:
+    role: AI Golf Coaching Researcher (NotebookLM)
+    goal: NotebookLM을 활용해 코킹과 힌지에 대한 정확하고 구체적인 코칭 지식(가슴 높이 기준)을 추출
+    backstory: 방대한 골프 레슨 자료를 학습한 NotebookLM 기반 리서처로, 50대 독학 골퍼가 이해하기 쉬운 핵심 원리를 정리하여 스크립터에게 제공합니다.
+
+  script_writer_agent:
+    role: Shorts Script Writer
+    goal: 리서치 내용을 바탕으로 50초 분량에 맞는 컷별 대본(자막, 나레이션)과 유튜브 업로드용 메타데이터 작성
+    backstory: 트렌디한 숏폼 카피라이터로서, 가슴 높이에서의 손목 꺾임(코킹)과 손목 받침(힌지)의 차이를 직관적으로 이해할 수 있는 비유와 짧은 호흡의 대본을 작성합니다.
+
+  image_creator_agent:
+    role: AI Image Generator
+    goal: 스크립트의 컷별 지시문에 맞춰 코킹과 힌지 디테일이 강조된 5컷의 세로형 이미지 생성
+    backstory: 시각 예술 프롬프트 엔지니어로서, 동일한 50대 남성 캐릭터가 가슴 높이에서 올바른 궤도로 스윙하는 모습을 디테일하게 묘사합니다.
+
+  video_editor_agent:
+    role: AI Video Editor
+    goal: TTS 오디오(edge-tts), 생성된 이미지, 한국어 자막을 결합하여 완벽하게 동기화된 쇼츠(MP4) 인코딩
+    backstory: 미디어 엔지니어로, MoviePy와 Pillow를 활용하여 오디오 길이에 맞춰 동적 재생 시간을 보정하고 고품질 렌더링을 수행합니다.
+
+workflow:
+  - step: 1
+    agent: notebooklm_researcher
+    action: "가슴 높이에서의 코킹(위아래)과 힌지(좌우) 방법에 대한 상세 코칭 포인트 리서치"
+  - step: 2
+    agent: script_writer_agent
+    action: "50초 5컷 구성의 스크립트(자막/나레이션) 및 제목/설명/태그 작성"
+  - step: 3
+    agent: image_creator_agent
+    action: "코킹과 힌지 디테일이 잘 보이는 50대 골퍼의 연속 컷 이미지 생성"
+  - step: 4
+    agent: video_editor_agent
+    action: "스크립트 기반 TTS 생성 및 이미지+자막 병합, 오디오 동기화 영상 인코딩"
