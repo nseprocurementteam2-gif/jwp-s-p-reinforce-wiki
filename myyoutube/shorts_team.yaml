@@ -19,8 +19,8 @@ agents:
 
   character_consistency_manager:
     role: Character Consistency Manager
-    goal: 영상의 모든 컷에서 인물, 의상, 도구(골프채)가 완벽히 동일하게 유지되도록 프롬프트 템플릿 통제 및 검수
-    backstory: 시각적 디테일에 극도로 예민한 아트 디렉터로, AI 이미지 생성 시 발생할 수 있는 형태 변형을 방지하는 엄격한 가이드라인을 강제합니다.
+    goal: 영상의 모든 5컷 장면에서 동일한 인물, 완벽히 동일한 복장(착장), 그리고 동일한 클럽(아이언 또는 드라이버)이 변경 없이 유지되도록 프롬프트 템플릿을 통제 및 강제 고정함.
+    backstory: 시각적 디테일에 극도로 예민한 총괄 QA 매니저로, AI 이미지 생성 시 발생할 수 있는 착장이나 클럽 종류의 변형을 절대 용납하지 않으며, 다음번에도 반드시 지켜지도록 엄격한 가이드라인을 강제합니다.
 
   image_creator_agent:
     role: AI Image Generator
