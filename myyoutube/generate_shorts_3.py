@@ -1,0 +1,136 @@
+# generate_shorts_3.py
+# 50대 골퍼를 위한 드라이버 수직 낙하 훈련법 쇼츠 자동 생성 스크립트
+
+import os
+import sys
+import asyncio
+import textwrap
+from PIL import Image, ImageDraw, ImageFont
+from moviepy import ImageClip, AudioFileClip, concatenate_videoclips
+import edge_tts
+
+# 터미널 출력 인코딩 설정 (Windows 대응)
+if sys.platform.startswith('win'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except AttributeError:
+        pass
+
+base_dir = r"c:\Users\NSE\.connect-ai-brain\myyoutube"
+brain_dir = r"C:\Users\NSE\.gemini\antigravity-ide\brain\68f36c99-f634-472d-ae03-a41b2d3f6de2"
+scratch_dir = os.path.join(base_dir, "scratch")
+os.makedirs(scratch_dir, exist_ok=True)
+
+# 씬 정보 정의
+scenes_data = [
+    {
+        "img": os.path.join(brain_dir, "shorts3_scene1_1780958338330.png"),
+        "subtitle": "힘껏 쳐도 왜 거리가 안 날까?",
+        "narration": "나이가 들수록 비거리가 줄어들어 힘을 꽉 주고 드라이버를 휘두르다 오히려 갈비뼈나 엘보 부상만 오신 분들 많으시죠? 힘으로 치면 클럽 스피드가 오히려 느려집니다."
+    },
+    {
+        "img": os.path.join(brain_dir, "shorts3_scene2_1780958351052.png"),
+        "subtitle": "중력으로 헤드를 툭 떨어뜨리세요",
+        "narration": "헤드 스피드의 핵심은 탑에서 다운스윙으로 전환할 때 클럽을 수직 방향으로 툭 떨어뜨리는 동작입니다. 중력의 힘을 이용하여 손을 오른쪽 허벅지 앞까지 밑으로 수직 낙하시켜 보세요."
+    },
+    {
+        "img": os.path.join(brain_dir, "shorts3_scene3_1780958364358.png"),
+        "subtitle": "상체 회전은 템포 조절",
+        "narration": "손이 내려오기도 전에 상체를 힘껏 돌려버리면 아웃인 궤도가 형성되며 심한 슬라이스가 발생합니다. 어깨 회전은 꾹 참고 손을 먼저 떨어뜨린 다음 몸통을 돌리는 순서, 이 시퀀스가 중요합니다."
+    },
+    {
+        "img": os.path.join(brain_dir, "shorts3_scene4_1780958378450.png"),
+        "subtitle": "허벅지 앞에서 헤드 던지기",
+        "narration": "수직 낙하된 헤드를 오른쪽 허벅지 앞 부근에서 힘차게 타겟 방향으로 던져주며 릴리즈해 줍니다. 억지로 밀어 치는 스윙이 아니라 채가 가볍게 휘둘러지며 튕겨 나가야 합니다."
+    },
+    {
+        "img": os.path.join(brain_dir, "shorts3_scene5_1780958391142.png"),
+        "subtitle": "부상 없이 200m 스트레이트 샷!",
+        "narration": "이 수직 낙하 시퀀스를 완벽하게 익히시면 힘을 들이지 않고도 200미터 이상 시원하게 뻗어가는 스트레이트 샷을 보낼 수 있습니다. 평생 안 아프게 골프를 즐겨보시기 바랍니다."
+    }
+]
+
+output_path = os.path.join(base_dir, "드라이버_수직낙하_쇼츠.mp4")
+font_path = r"C:\Windows\Fonts\malgunbd.ttf"
+voice = "ko-KR-InJoonNeural"
+
+async def generate_tts(text, file_path):
+    communicate = edge_tts.Communicate(text, voice)
+    await communicate.save(file_path)
+    print(f"TTS 생성 완료: {file_path}")
+
+def add_subtitle(image_path, text, output_img_path):
+    if not os.path.exists(image_path):
+        print(f"오류: 이미지 파일 누락 - {image_path}")
+        sys.exit(1)
+        
+    img = Image.open(image_path)
+    width, height = img.size
+    draw = ImageDraw.Draw(img)
+    
+    font_size = int(height * 0.045)
+    
+    try:
+        font = ImageFont.truetype(font_path, font_size)
+    except IOError:
+        font = ImageFont.load_default()
+        print("경고: 한글 폰트를 불러오지 못해 기본 폰트를 사용합니다.")
+    
+    text = "\n".join(textwrap.wrap(text, width=15))
+    
+    try:
+        text_bbox = draw.multiline_textbbox((0, 0), text, font=font, align='center')
+        text_width = text_bbox[2] - text_bbox[0]
+        text_height = text_bbox[3] - text_bbox[1]
+    except AttributeError:
+        text_width, text_height = draw.textsize(text, font=font)
+        
+    bar_width = int(width * 0.85)
+    bar_height = int(text_height * 1.8)
+    bar_x1 = int((width - bar_width) / 2)
+    bar_y1 = int(height * 0.82)
+    bar_x2 = bar_x1 + bar_width
+    bar_y2 = bar_y1 + bar_height
+    
+    overlay = Image.new('RGBA', img.size, (0, 0, 0, 0))
+    overlay_draw = ImageDraw.Draw(overlay)
+    overlay_draw.rounded_rectangle([bar_x1, bar_y1, bar_x2, bar_y2], radius=20, fill=(0, 0, 0, 180))
+    
+    img = img.convert('RGBA')
+    img = Image.alpha_composite(img, overlay).convert('RGB')
+    
+    draw_rgb = ImageDraw.Draw(img)
+    text_x = bar_x1 + (bar_width - text_width) // 2
+    text_y = bar_y1 + (bar_height - text_height) // 2 - int(text_height * 0.1)
+    draw_rgb.multiline_text((text_x, text_y), text, fill=(255, 235, 59), font=font, align='center')
+    
+    img.save(output_img_path)
+    print(f"자막 이미지 저장 완료: {output_img_path}")
+
+async def main():
+    processed_clips = []
+    
+    print("--- 1단계: TTS 오디오 및 자막 합성 이미지 생성 ---")
+    for i, scene in enumerate(scenes_data):
+        audio_file = os.path.join(scratch_dir, f"audio_shorts3_scene_{i}.mp3")
+        await generate_tts(scene["narration"], audio_file)
+        
+        temp_img_path = os.path.join(scratch_dir, f"temp_shorts3_scene_{i}.png")
+        add_subtitle(scene["img"], scene["subtitle"], temp_img_path)
+        
+        audio_clip = AudioFileClip(audio_file)
+        duration = audio_clip.duration
+        print(f"씬 {i+1} 재생 시간: {duration:.2f}초")
+        
+        clip = ImageClip(temp_img_path).with_duration(duration).with_audio(audio_clip)
+        processed_clips.append(clip)
+        
+    print("\n--- 2단계: 비디오 조립 및 렌더링 ---")
+    video = concatenate_videoclips(processed_clips, method="compose")
+    
+    print(f"최종 비디오 생성 시작: {output_path}")
+    video.write_videofile(output_path, fps=24, codec='libx264', audio_codec='aac')
+    print(f"\n✅ 완료: 쇼츠 비디오 3이 저장되었습니다 -> {output_path}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
