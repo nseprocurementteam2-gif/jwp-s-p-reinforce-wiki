@@ -1,5 +1,5 @@
-# generate_shorts_week2_2.py
-# 50대 골퍼를 위한 드라이버 슬라이스 해결 쇼츠 자동 생성 스크립트
+# generate_shorts_week2_4.py
+# 50대 골퍼를 위한 코킹과 힌지 구분 쇼츠 자동 생성 스크립트
 
 import os
 import sys
@@ -17,40 +17,41 @@ if sys.platform.startswith('win'):
         pass
 
 base_dir = r"c:\Users\NSE\.connect-ai-brain\myyoutube"
-brain_dir = r"C:\Users\NSE\.gemini\antigravity-ide\brain\e501f0fd-3960-4f82-9a5f-96427d42d668"
+# 신규 AI 분석 그래픽이 적용된 이미지가 생성된 Artifact 폴더 경로 지정
+brain_dir = r"C:\Users\NSE\.gemini\antigravity-ide\brain\a251b1bd-485d-4684-b2a7-5fe8ff60fbc7"
 scratch_dir = os.path.join(base_dir, "scratch")
 os.makedirs(scratch_dir, exist_ok=True)
 
 # 씬 정보 정의 (이미지 파일 경로 및 대본 매핑)
 scenes_data = [
     {
-        "img": os.path.join(brain_dir, "shorts_w2_s2_p1_1781217703182.png"),
-        "subtitle": "칠 때마다 휘어지는 슬라이스?",
-        "narration": "드라이버 티샷만 하면 우측으로 휘는 슬라이스로 고민이신가요? 원인은 스윙 궤도가 아웃에서 인으로 깎여 맞으며 우측 스핀이 걸리기 때문입니다."
+        "img": os.path.join(brain_dir, "cocking_v2_scene_one_1781650153983.png"),
+        "subtitle": "코킹과 힌지, 헷갈리지 마세요!",
+        "narration": "백스윙 때 손목을 어떻게 꺾어야 할지 헷갈리시죠? 가슴 높이를 기준으로 코킹과 힌지를 나누면 골프가 쉬워집니다."
     },
     {
-        "img": os.path.join(brain_dir, "shorts_w2_s2_p2_1781217716224.png"),
-        "subtitle": "오른팔꿈치를 갈비뼈에 붙이세요",
-        "narration": "쉽게 고치려면 백스윙 탑에서 내려올 때, 오른팔 팔꿈치를 오른쪽 옆구리 갈비뼈에 바짝 밀착시켜 수직으로 떨어뜨려야 합니다."
+        "img": os.path.join(brain_dir, "cocking_v2_scene_two_1781650166621.png"),
+        "subtitle": "코킹은 위아래 수직 꺾임!",
+        "narration": "코킹은 손목을 위아래 즉 수직 방향으로 꺾어주는 동작입니다. 백스윙 올라갈 때 가볍게 위로 접어 지렛대 힘을 만듭니다."
     },
     {
-        "img": os.path.join(brain_dir, "shorts_w2_s2_p3_1781217727715.png"),
-        "subtitle": "오른손이 왼손을 덮는 릴리즈",
-        "narration": "임팩트 후에는 오른손이 왼손을 자연스럽게 덮어주는 릴리즈 동작을 해주세요. 그래야 열린 헤드가 닫히며 볼을 강하게 밀어냅니다."
+        "img": os.path.join(brain_dir, "cocking_v2_scene_three_1781650179382.png"),
+        "subtitle": "힌지는 좌우 수평 접힘!",
+        "narration": "반면 힌지는 손등이 뒤로 젖혀지듯 양옆 즉 수평으로 접히는 동작입니다. 백스윙에서 페이스 면을 스퀘어로 유지하는 비결입니다."
     },
     {
-        "img": os.path.join(brain_dir, "shorts_w2_s2_p4_1781217738562.png"),
-        "subtitle": "헤드를 닫아 잡는 셋업 연습",
-        "narration": "셋업 시 헤드를 살짝 닫고, 왼손 그립을 세 손가락이 보이도록 약간 스트롱 그립으로 잡는 것도 슬라이스 예방에 탁월합니다."
+        "img": os.path.join(brain_dir, "cocking_v2_scene_four_1781650190635.png"),
+        "subtitle": "가슴 높이에서 손목 체크",
+        "narration": "클럽이 가슴 높이에 왔을 때, 왼 손목은 코킹으로 단단히 꺾여 있고 오른 손등은 힌지로 쟁반을 받치듯 접혀 있는지 확인하세요."
     },
     {
-        "img": os.path.join(brain_dir, "shorts_w2_s2_p5_1781217751734.png"),
-        "subtitle": "직진하는 비거리 이백이십 미터!",
-        "narration": "팔꿈치 밀착과 릴리즈 이 두 가지만 지키시면 아웃인 궤도가 완벽한 인아웃으로 바뀌어, 슬라이스 없이 똑바로 이백이십 미터를 뻗어 나갑니다."
+        "img": os.path.join(brain_dir, "cocking_v2_scene_five_1781650202169.png"),
+        "subtitle": "정확한 궤적과 비거리 상승!",
+        "narration": "코킹과 힌지의 완벽한 조화가 이루어지면 헤드 페이스가 흐트러지지 않아 스윙 궤도가 정밀해지고 강인한 비거리가 만들어집니다."
     }
 ]
 
-output_path = os.path.join(base_dir, "슬라이스_해결_쇼츠.mp4")
+output_path = os.path.join(base_dir, "코킹_힌지_구분_쇼츠.mp4")
 font_path = r"C:\Windows\Fonts\malgunbd.ttf"  # Windows 맑은 고딕 볼드 폰트
 voice = "ko-KR-InJoonNeural"  # 50대 남성 톤의 목소리
 
@@ -68,6 +69,7 @@ def add_subtitle(image_path, text, output_img_path):
     width, height = img.size
     draw = ImageDraw.Draw(img)
     
+    # 9:16 비디오 해상도에 맞춘 자막 폰트 크기 계산
     font_size = int(height * 0.045)
     
     try:
@@ -93,7 +95,7 @@ def add_subtitle(image_path, text, output_img_path):
     bar_x2 = bar_x1 + bar_width
     bar_y2 = bar_y1 + bar_height
     
-    # 반투명 배경 바 그리기
+    # 반투명 배경 바 그리기 (투명도 180)
     overlay = Image.new('RGBA', img.size, (0, 0, 0, 0))
     overlay_draw = ImageDraw.Draw(overlay)
     overlay_draw.rounded_rectangle([bar_x1, bar_y1, bar_x2, bar_y2], radius=20, fill=(0, 0, 0, 180))
@@ -101,7 +103,7 @@ def add_subtitle(image_path, text, output_img_path):
     img = img.convert('RGBA')
     img = Image.alpha_composite(img, overlay).convert('RGB')
     
-    # 노란색 자막 텍스트 그리기
+    # 노란색 자막 텍스트 렌더링
     draw_rgb = ImageDraw.Draw(img)
     text_x = bar_x1 + (bar_width - text_width) // 2
     text_y = bar_y1 + (bar_height - text_height) // 2 - int(text_height * 0.1)
@@ -115,16 +117,17 @@ async def main():
     
     print("--- 1단계: TTS 오디오 및 자막 합성 이미지 생성 ---")
     for i, scene in enumerate(scenes_data):
-        audio_file = os.path.join(scratch_dir, f"audio_shorts_w2_s2_scene_{i}.mp3")
+        audio_file = os.path.join(scratch_dir, f"audio_shorts_w2_s4_scene_{i}.mp3")
         await generate_tts(scene["narration"], audio_file)
         
-        temp_img_path = os.path.join(scratch_dir, f"temp_shorts_w2_s2_scene_{i}.png")
+        temp_img_path = os.path.join(scratch_dir, f"temp_shorts_w2_s4_scene_{i}.png")
         add_subtitle(scene["img"], scene["subtitle"], temp_img_path)
         
         audio_clip = AudioFileClip(audio_file)
         duration = audio_clip.duration
         print(f"씬 {i+1} 재생 시간: {duration:.2f}초")
         
+        # MoviePy v2.x 대응 API 체이닝 적용
         clip = ImageClip(temp_img_path).with_duration(duration).with_audio(audio_clip)
         processed_clips.append(clip)
         
@@ -133,7 +136,7 @@ async def main():
     
     print(f"최종 비디오 생성 시작: {output_path}")
     video.write_videofile(output_path, fps=24, codec='libx264', audio_codec='aac')
-    print(f"\n✅ 완료: 쇼츠 비디오 2가 저장되었습니다 -> {output_path}")
+    print(f"\n✅ 완료: 코킹/힌지 구분 쇼츠 비디오가 저장되었습니다 -> {output_path}")
 
 if __name__ == "__main__":
     asyncio.run(main())
